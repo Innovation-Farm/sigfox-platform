@@ -31,5 +31,21 @@ jobs:
       - name: Setup repo
         uses: actions/checkout@v2
 
-      - name: Build
+      - name: Build applications
         run: docker-compose build
+
+      - name: Build databases
+        run: docker-compose -f ./rabbit-mongo.yml build
+
+      - name: Login to container registry
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com/honeytrap15/sigfox-platform
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
+
+      - name: Push application packages
+        run: docker-compose push
+
+      - name: Push database packages
+        run: docker-compose -f ./rabbit-mongo.yml push
