@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    image: docker.pkg.github.com/honeytrap15/sigfox-platform/backend:${GIT_HASH:-latest}
+    image: docker.pkg.github.com/${REPO_OWNER:-temp}/sigfox-platform/backend:${GIT_HASH:-latest}
     container_name: backend
     build:
       context: backend
@@ -14,7 +14,7 @@ services:
       - '3000:3000'
 
   primus:
-    image: docker.pkg.github.com/honeytrap15/sigfox-platform/primus:${GIT_HASH:-latest}
+    image: docker.pkg.github.com/${REPO_OWNER:-temp}/sigfox-platform/primus:${GIT_HASH:-latest}
     container_name: primus
     build: primus
     restart: 'always'
@@ -24,7 +24,7 @@ services:
       - '2333:2333'
 
   frontend:
-    image: docker.pkg.github.com/honeytrap15/sigfox-platform/frontend:${GIT_HASH:-latest}
+    image: docker.pkg.github.com/${REPO_OWNER:-temp}/sigfox-platform/frontend:${GIT_HASH:-latest}
     container_name: frontend
     build:
       context: frontend
