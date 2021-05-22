@@ -10,6 +10,7 @@ if (MONGO_URL) {
     name: 'mongodb',
     connector: 'mongodb',
     disableDefaultSort: true,
+    useUnifiedTopology: true,
   };
 } else console.error('Env MONGO_URL not set');
 
