@@ -16,9 +16,6 @@ jobs:
       - name: Build applications
         run: docker-compose build
 
-      - name: Build databases
-        run: docker-compose -f ./rabbit-mongo.yml build
-
       - name: Login to container registry
         uses: docker/login-action@v1
         with:
@@ -28,6 +25,3 @@ jobs:
 
       - name: Push application packages
         run: docker-compose push
-
-      - name: Push database packages
-        run: docker-compose -f ./rabbit-mongo.yml push
