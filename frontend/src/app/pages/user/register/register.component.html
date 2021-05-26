@@ -19,7 +19,7 @@
 
           <div class="input-group mb-2">
             <span class="input-group-addon"><i class="icon-lock"></i></span>
-            <input [(ngModel)]="verifyPassword" type="password" class="form-control" name="verifyPassword" (ngModelChange)="verify()" placeholder="{{ 'repeat_password' | translate }}">
+            <input [(ngModel)]="verifyPassword" type="password" class="form-control" name="verifyPassword" (ngModelChange)="clear()" placeholder="{{ 'repeat_password' | translate }}">
           </div>
 
           <div *ngIf="errorMessage != ''">

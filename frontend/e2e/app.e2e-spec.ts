@@ -33,7 +33,7 @@ describe('Register', () => {
     browser.sleep(500);
 
     browser.getCurrentUrl().then(url => {
-      expect(url).toEqual("http://localhost:4201/#/");
+      expect(url).toEqual("http://localhost:4201/#/login");
     });
   });
 

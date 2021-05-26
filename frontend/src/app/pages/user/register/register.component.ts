@@ -18,7 +18,6 @@ export class RegisterComponent {
   public verifyPassword = '';
   public errorMessage = '';
 
-  private setting: AppSetting;
   private settings: AppSetting[] = [];
 
   private canUserRegister: any = false;
@@ -54,39 +53,12 @@ export class RegisterComponent {
     });
   }
 
-  verify(): void {
-    if (this.user.password !== this.verifyPassword) {
-      this.errorMessage = this.translate.instant('error.not_match_password');
-    } else {
-      this.errorMessage = '';
-    }
+  clear(): void {
+    this.errorMessage = '';
   }
 
   onLogin(): void {
-    this.userApi.login(this.user).subscribe(
-      (token: AccessToken) => {
-        // console.log('New token: ', token);
-
-        // Update the last login date
-        this.userApi.patchAttributes(
-          token.userId,
-          {
-            'loggedAt': new Date()
-          }
-        ).subscribe();
-        this.rt.connect(token.id);
-        // Redirect to the /dashboard
-        this.router.navigate(['/']);
-      }, err => {
-        // console.log(err);
-        if (err.statusCode === 401) {
-          this.errorMessage = this.translate.instant('error.invalid_login');
-        } else if (err.statusCode === 500) {
-          this.errorMessage = this.translate.instant('error.internal_server');
-        } else {
-          this.errorMessage = err.message;
-        }
-      });
+    this.router.navigate(['/login']);
   }
 
   getAppSettings(): void {
