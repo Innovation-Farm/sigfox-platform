@@ -4,8 +4,14 @@
  */
 module.exports = (app: any, cb: any) => {
   // This is an important env
-  if (process.env.BASE_URL) process.env.API_URL = 'https://api.' + process.env.BASE_URL.replace(/(^\w+:|^)\/\//, '');
-  else console.error('Please set the BASE_URL env');
+  if (process.env.BASE_URL) {
+    if (!process.env.API_URL) {
+      process.env.API_URL = 'https://api.' + process.env.BASE_URL.replace(/(^\w+:|^)\/\//, '');
+    }
+    console.log('API_URL: ' + process.env.API_URL);
+  } else {
+    console.error('Please set the BASE_URL env');
+  }
 
   const AppSetting = app.models.AppSetting;
   let countAppSettings = 0;

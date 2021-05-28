@@ -95,8 +95,14 @@ class user {
       } catch {
         renderer = loopback.template(path.resolve(__dirname, "../../server/views/en/resetPassword.ejs"));
       }
+      let subject: string;
+      if (process.env.MAIL_LANG == "ja") {
+        subject = "[Sigfox Platform] パスワードの再登録";
+      } else {
+        subject = "Reset yout password on sigfox platform";
+      }
       const html_body = renderer({resetUrl});
-      sendMail(info.email, "Reset yout password on sigfox platform", html_body, null);
+      sendMail(info.email, subject, html_body, null);
     });
   }
 
@@ -231,9 +237,15 @@ class user {
     } catch {
       renderer = loopback.template(path.resolve(__dirname, "../../server/views/en/verify.ejs"));
     }
+    let subject: string;
+    if (process.env.MAIL_LANG == "ja") {
+      subject = "Sigfox Platformへようこそ"
+    } else {
+      subject = "Welcome to the Sigfox Platform!";
+    }
 
     const html_body = renderer(customMessage);
-    sendMail(userInstance.email, "Welcome to the Sigfox Platform!", html_body, userInstance);
+    sendMail(userInstance.email, subject, html_body, userInstance);
   }
 
   // Before delete user method
