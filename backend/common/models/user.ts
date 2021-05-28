@@ -88,7 +88,13 @@ class user {
       const baseUrl = process.env.BASE_URL;
       const resetUrl = baseUrl + '/#/reset-password?access_token=' + info.accessToken.id;
       // Prepare a loopback template renderer
-      const renderer = loopback.template(path.resolve(__dirname, "../../server/views/resetPassword.ejs"));
+ 
+      let renderer: Function;
+      try {
+        renderer = loopback.template(path.resolve(__dirname, "../../server/views/" + process.env.MAIL_LANG + "/resetPassword.ejs"));
+      } catch {
+        renderer = loopback.template(path.resolve(__dirname, "../../server/views/en/resetPassword.ejs"));
+      }
       const html_body = renderer({resetUrl});
       sendMail(info.email, "Reset yout password on sigfox platform", html_body, null);
     });
@@ -218,7 +224,14 @@ class user {
     // Create a custom object your want to pass to the email template. You can create as many key-value pairs as you want
     const verificationUrl = process.env.API_URL + "/api/users/confirm?uid=" + userInstance.id + "&token=" + verificationToken + "&redirect=" + process.env.BASE_URL;
     const customMessage = {verificationUrl};
-    const renderer = loopback.template(path.resolve(__dirname, "../../server/views/verify.ejs"));
+
+    let renderer: Function;
+    try {
+      renderer = loopback.template(path.resolve(__dirname, "../../server/views/" + process.env.MAIL_LANG + "/verify.ejs"));
+    } catch {
+      renderer = loopback.template(path.resolve(__dirname, "../../server/views/en/verify.ejs"));
+    }
+
     const html_body = renderer(customMessage);
     sendMail(userInstance.email, "Welcome to the Sigfox Platform!", html_body, userInstance);
   }
