@@ -1,9 +1,9 @@
 <!doctype html>
-<html>
+<html lang="ja">
 <head>
   <meta name="viewport" content="width=device-width" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Email verification</title>
+  <title>メール認証</title>
   <style>
     /* -------------------------------------
         GLOBAL RESETS
@@ -251,7 +251,7 @@
       <div class="content">
 
         <!-- START CENTERED WHITE CONTAINER -->
-        <span class="preheader">Welcome to the Sigfox Platform!</span>
+        <span class="preheader">Sigfox Platformへようこそ</span>
         <table class="main">
 
           <!-- START MAIN CONTENT AREA -->
@@ -260,8 +260,7 @@
               <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td>
-                    <p>Hi there,</p>
-                    <p>Welcome to the <b>Sigfox Platform</b>! Please <b>confirm</b> you are a real super cool new user by pressing the button below.</p>
+                    <p><b>Sigfox Platform</b>へようこそ。<b>メールアドレスを認証する</b>ボタンをクリックしてメールアドレスを認証することで、正式なユーザとしてサービスを利用することができます。</p>
                     <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                       <tbody>
                       <tr>
@@ -269,7 +268,7 @@
                           <table border="0" cellpadding="0" cellspacing="0">
                             <tbody>
                             <tr>
-                              <td> <a href="http://htmlemail.io" target="_blank">Confirm</a> </td>
+                              <td> <a href="<%= verificationUrl %>" target="_blank">Confirm</a> </td>
                             </tr>
                             </tbody>
                           </table>
@@ -277,8 +276,7 @@
                       </tr>
                       </tbody>
                     </table>
-                    <p>Glad to have you.</p>
-                    <p>Good luck! Hope it works.</p>
+                    <p>引き続き、Sigfox Platformをお楽しみください！</p>
                   </td>
                 </tr>
               </table>
