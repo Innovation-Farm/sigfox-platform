@@ -4,7 +4,7 @@
   "forgot_password": "Forgot password?",
   "error": {
     "invalid_login": "Invalid username or password.",
-    "intarnal_server": "Internal server error",
+    "internal_server": "Internal server error",
     "not_match_password": "Passwords do not match.",
     "conflict_email": "Email already taken.",
     "invalid_format": "Invalid username or password."
@@ -52,5 +52,8 @@
   "type": "Type",
   "description": "Description",
   "input_reset_email": "An email will be sent to you for resetting your password",
-  "send_mail": "send mail"
+  "send_mail": "send mail",
+  "back": "back",
+  "reset_password": "Reset your password",
+  "send_new_password": "Reset password"
 }
