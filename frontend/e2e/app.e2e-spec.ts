@@ -5,6 +5,7 @@ import { LoginPage } from './po/login.po';
 import { Nav } from './po/nav.po';
 import { OverviewPage } from './po/overview.po';
 import { ProfilePage } from './po/profile.po';
+import { ConnectorsPage } from './po/connector.po';
 import { RegisterPage } from './po/register.po';
 
 
@@ -17,7 +18,6 @@ browser.waitForAngularEnabled(false);
 
 describe('Register', () => {
   const page: RegisterPage = new RegisterPage();
-  const header: Header = new Header();
 
   it('be able to open register page', async() => {
     page.open();
@@ -37,19 +37,11 @@ describe('Register', () => {
     });
   });
 
-  it('be able to logout', async() => {
-    header.logout();
-    browser.sleep(500);
-
-    browser.getCurrentUrl().then(url => {
-      expect(url).toEqual("http://localhost:4201/#/login");
-    });
-  });
-
 });
 
 describe('Login', () => {
   const page: LoginPage = new LoginPage();
+  const header: Header = new Header();
 
   it('be able to open login page', async() => {
     page.open();
@@ -61,6 +53,24 @@ describe('Login', () => {
   });
 
   it('redirect to overview page after succeeded to login', async() => {
+    page.login(email, password);
+    browser.sleep(500);
+
+    browser.getCurrentUrl().then(url => {
+      expect(url).toEqual("http://localhost:4201/#/");
+    });
+  });
+
+  it('be able to logout', async() => {
+    header.logout();
+    browser.sleep(500);
+
+    browser.getCurrentUrl().then(url => {
+      expect(url).toEqual("http://localhost:4201/#/login");
+    });
+  });
+
+  it('relogin after logout', async() => {
     page.login(email, password);
     browser.sleep(500);
 
@@ -173,6 +183,23 @@ describe('Organizations', () => {
     });
   })
 
+});
+
+describe('Connectors', () => {
+  const page: ConnectorsPage = new ConnectorsPage();
+
+  it('be able to open connectors', () => {
+    page.open();
+    browser.sleep(500);
+
+    browser.getCurrentUrl().then(url => {
+      expect(url).toEqual("http://localhost:4201/#/connectors");
+    });
+  });
+
+  it('be able to create webhook connector', () => {
+    page.addWebhook('test', 'http://foo.example');
+  });
 });
 
 describe('Profile', () => {

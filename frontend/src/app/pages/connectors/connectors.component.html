@@ -243,7 +243,8 @@
                   <small class="text-danger">*</small>
                 </label>
                 <div class="col-md-9">
-                  <select class="form-control" size="1"
+                  <select class="form-control"
+                          size="1"
                           name="connectorToAdd.method"
                           [(ngModel)]="connectorToAdd.method"
                           required>
@@ -452,14 +453,15 @@
                 <small class="text-danger">*</small>
               </label>
               <div class="col-md-9">
-                <angular2-multiselect #selectTypesEdit
-                                      name="selectTypes"
-                                      [data]="selectTypes"
-                                      [(ngModel)]="selectedTypes"
-                                      [settings]="selectOneSettings"
-                                      (onSelect)="connectorToEdit.type = $event.id; selectTypesEdit.isActive = false;"
-                                      (onDeSelect)="connectorToEdit.type = null"
-                                      required>
+                <angular2-multiselect
+                  #selectTypesEdit
+                  name="selectTypes"
+                  [data]="selectTypes"
+                  [(ngModel)]="selectedTypes"
+                  [settings]="selectOneSettings"
+                  (onSelect)="connectorToEdit.type = $event.id; selectTypesEdit.isActive = false;"
+                  (onDeSelect)="connectorToEdit.type = null"
+                  required>
                 </angular2-multiselect>
               </div>
             </div>
