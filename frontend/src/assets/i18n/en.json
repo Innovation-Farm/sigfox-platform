@@ -50,5 +50,7 @@
   "name": "Name",
   "connector_name": "Connector name",
   "type": "Type",
-  "description": "Description"
+  "description": "Description",
+  "input_reset_email": "An email will be sent to you for resetting your password",
+  "send_mail": "send mail"
 }

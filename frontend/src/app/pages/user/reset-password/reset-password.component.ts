@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserApi} from "../../../shared/sdk/services/custom";
 import {HttpHeaders} from "@angular/common/http";
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reset-password',
@@ -20,6 +21,7 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(private router: Router,
               private userApi: UserApi,
+              private translate: TranslateService,
               private activatedRoute: ActivatedRoute) {
     this.activatedRoute.queryParams.subscribe(params => {
       this.access_token = params['access_token'];

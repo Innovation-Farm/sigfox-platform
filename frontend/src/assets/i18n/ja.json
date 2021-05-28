@@ -50,5 +50,7 @@
   "name": "名前",
   "connector_name": "コネクター名",
   "type": "タイプ",
-  "description": "説明"
+  "description": "説明",
+  "input_reset_email": "登録したメールアドレスを入力",
+  "send_mail": "メールを送信"
 }
