@@ -5,6 +5,8 @@ import {ConnectorApi, UserApi} from '../../shared/sdk/services/custom';
 import {TranslateService} from '@ngx-translate/core';
 import {DOCUMENT} from '@angular/common';
 
+import {environment} from '../../../../environments/environment';
+
 @Component({
   selector: 'app-demo',
   templateUrl: './api.component.html',
@@ -57,7 +59,7 @@ export class ApiComponent implements OnInit, OnDestroy {
       this.user.devAccessTokens = devTokens;
       this.userReady = true;
     });
-    this.callbackURL = 'https://api.' + this.document.location.hostname + '/api';
+    this.callbackURL = environment.callbackUrl + '/api';
 
     this.listSigfoxBackendDevicetypes();
   }

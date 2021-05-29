@@ -34,6 +34,7 @@ services:
         - API_URL=${API_URL:-http://localhost:3000}
         - API_VERSION=${API_VERSION:-api}
         - PRIMUS_URL=${PRIMUS_URL:-http://localhost:2333}
+        - CALLBACK_URL=${CALLBACK_URL:-http://api.localhost}
     restart: 'always'
     ports:
       - '4200:80'

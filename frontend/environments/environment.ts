@@ -5,7 +5,9 @@
 
 export const environment = {
   production: false,
+  envName: 'dev',
   apiUrl: 'http://localhost:3000',
   apiVersion: 'api',
-  primusUrl: 'http://localhost:2333'
+  primusUrl: 'http://localhost:2333',
+  callbackUrl: 'http://api.localhost'
 };

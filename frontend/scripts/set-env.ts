@@ -13,7 +13,8 @@ export const environment = {
   production: ${isProd},
   apiUrl: "${process.env.API_URL}",
   apiVersion: "${process.env.API_VERSION}",
-  primusUrl: "${process.env.PRIMUS_URL}"
+  primusUrl: "${process.env.PRIMUS_URL}",
+  callbackUrl: "${process.env.CALLBACK_URL}",
 };
 `;
 console.log(envConfigFile);

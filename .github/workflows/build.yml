@@ -13,6 +13,7 @@ jobs:
       SERVER_NAME: ${{ secrets.SERVER_NAME }}
       API_URL: ${{ secrets.API_URL }}
       PRIMUS_URL: ${{ secrets.PRIMUS_URL }}
+      CALLBACK_URL: ${{ secrets.CALLBACK_URL }}
       REPO_OWNER: innovation-farm
     steps:
       - name: Setup repo
