@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AppSetting, FireLoopRef, Organization, Role, User} from '../../shared/sdk/models';
 import {AppSettingApi, OrganizationApi, RoleApi, UserApi} from '../../shared/sdk/services';
-import {ToastrConfig, ToastrService} from 'ngx-toastr';
+import {ToastrService} from 'ngx-toastr';
 import {Subscription} from 'rxjs/Subscription';
 import {
   AlertApi,
@@ -15,10 +15,12 @@ import {
   WidgetApi
 } from '../../shared/sdk/services/custom';
 import {RealtimeService} from "../../shared/realtime/realtime.service";
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-messages',
-  templateUrl: './admin.component.html'
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
@@ -84,7 +86,8 @@ export class AdminComponent implements OnInit, OnDestroy {
               private organizationApi: OrganizationApi,
               private appSettingApi: AppSettingApi,
               private roleApi: RoleApi,
-              private toasterService: ToastrService) {
+              private toasterService: ToastrService,
+              private translate: TranslateService) {
 
     this.toasterService = toasterService;
   }

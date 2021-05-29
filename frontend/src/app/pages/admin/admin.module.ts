@@ -3,14 +3,12 @@ import {AdminComponent} from './admin.component';
 import {AdminRoutingModule} from './admin-routing.module';
 import {CommonModule} from '@angular/common';
 import {ToastrModule} from 'ngx-toastr';
-import {AccordionModule} from 'ngx-bootstrap/accordion';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
-
 import {MomentModule} from 'ngx-moment';
 import {FormsModule} from '@angular/forms';
-
 import {DataTablesModule} from 'angular-datatables';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -20,10 +18,12 @@ import {DataTablesModule} from 'angular-datatables';
     MomentModule,
     FormsModule,
     ToastrModule.forRoot(),
-    AccordionModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    DataTablesModule
+    DataTablesModule,
+    TranslateModule.forChild({
+      extend: true
+    }),
   ],
   declarations: [
     AdminComponent

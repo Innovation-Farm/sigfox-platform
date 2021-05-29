@@ -55,5 +55,19 @@
   "send_mail": "メールを送信",
   "back": "戻る",
   "reset_password": "新しいパスワードを入力",
-  "send_new_password": "パスワードを登録"
+  "send_new_password": "パスワードを登録",
+  "application_settings": "アプリケーション設定",
+  "canUserRegister": "新規ユーザー登録の許可",
+  "canUserCreateOrganization": "ユーザーによる組織の作成",
+  "showDeviceSuccessRate": "デバイスサクセスレートの表示",
+  "bannerMessage": "バナーメッセージ",
+  "isMongodbIndexed": "MongoDBのインデックス",
+  "application_statistics": "アプリケーションの診断",
+  "users": "ユーザー管理",
+  "add_user": "新規",
+  "user": "ユーザー",
+  "last_connect": "最終接続日時",
+  "roles": "ロール",
+  "action": "アクション",
+  "admin": "管理者"
 }

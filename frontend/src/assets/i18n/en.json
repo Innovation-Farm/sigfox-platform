@@ -55,5 +55,19 @@
   "send_mail": "send mail",
   "back": "back",
   "reset_password": "Reset your password",
-  "send_new_password": "Reset password"
+  "send_new_password": "Reset password",
+  "application_settings": "Application settings",
+  "canUserRegister": "Can user register",
+  "canUserCreateOrganization": "Can user creates a new organization",
+  "showDeviceSuccessRate": "Show device success rate",
+  "bannerMessage": "Banner message",
+  "isMongodbIndexed": "Indexed MongoDB",
+  "application_statistics": "Application statistics",
+  "users": "Users",
+  "add_user": "Add a new user",
+  "user": "User",
+  "last_connect": "Last Connect (RT)",
+  "roles": "Roles",
+  "action": "Action",
+  "admin": "Admin"
 }
