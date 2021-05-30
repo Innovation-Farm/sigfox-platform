@@ -52,8 +52,6 @@
       </div>
     </div>
   </div>
-
-  <h3>Sigfox Backend Integration</h3>
   <hr />
   <div class="row">
     <div class="col-md-4">
@@ -292,12 +290,12 @@
             </p>
           </div>
         </accordion-group>
-        <!--<accordion-group>
+        <accordion-group>
           <div accordion-heading>
-            <strong class="text-success">STATUS</strong> <i class="fa fa-question-circle pull-right" aria-hidden="true"></i>
+            <strong class="text-success">ATLAS NATIVE</strong> <i class="fa fa-question-circle pull-right" aria-hidden="true"></i>
           </div>
           <div class="card-block">
-            <p>Type: <strong>SERVICE</strong> | <strong>STATUS</strong></p>
+            <p>Type: <strong>SERVICE</strong> | <strong>DATA_ADVANCED</strong></p>
             <p>Url pattern: <strong tooltip="Click to copy" click-copy (click)="toastClick()">{{ callbackURL + '/Messages/sigfox/status' }}</strong></p>
             <p>Use HTTP Method: <strong>POST</strong></p>
             <p>Send SNI: <strong class="bg-api btn-round"><i class="fa fa-check" aria-hidden="true"></i></strong></p>
@@ -306,14 +304,22 @@
             <p>Content Type: <strong tooltip="Click to copy" click-copy (click)="toastClick()">application/json</strong></p>
             <p>Body: <code class="text-center" tooltip="Click to copy" click-copy (click)="toastClick()">{{
               '{
-              "deviceId": "{device}",
-              "time": {time},
-              "seqNumber": {seqNumber}
+                "device":"{device}",
+                "time":{time},
+                "data":"{data}",
+                "seqNumber":"{seqNumber}",
+                "lqi":"{lqi}",
+                "fixedLat":"{fixedLat}",
+                "fixedLng":"{fixedLng}",
+                "operatorName":"{operatorName}",
+                "countryCode":"{countryCode}",
+                "deviceTypeId":"{deviceTypeId}",
+                "computedLocation":{computedLocation}
               }'
               }}</code>
             </p>
           </div>
-        </accordion-group>-->
+        </accordion-group>
       </accordion>
     </div>
   </div>
