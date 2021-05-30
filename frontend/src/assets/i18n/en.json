@@ -69,5 +69,10 @@
   "last_connect": "Last Connect (RT)",
   "roles": "Roles",
   "action": "Action",
-  "admin": "Admin"
+  "admin": "Admin",
+  "date": "Date",
+  "data": "Data",
+  "device": "Device",
+  "geoloc": "Geoloc",
+  "seq_number": "Seq Number"
 }

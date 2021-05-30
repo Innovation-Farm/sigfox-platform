@@ -69,5 +69,11 @@
   "last_connect": "最終接続日時",
   "roles": "ロール",
   "action": "アクション",
-  "admin": "管理者"
+  "admin": "管理者",
+  "date": "日時",
+  "data": "データ",
+  "device": "デバイス",
+  "geoloc": "位置情報",
+  "seq_number": "シーケンスNo",
+  "reception": "レセプション"
 }

@@ -12,7 +12,7 @@ headers = {
 payload = {
     "deviceId": "00000001",
     "time": int(time.time()),
-    "seqNumber": time.time() % 4096,
+    "seqNumber": int(time.time()) % 4096,
     "data": "fe0500090f423eb90b43"
 }
 

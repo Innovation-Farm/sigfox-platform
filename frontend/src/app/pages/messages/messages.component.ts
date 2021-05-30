@@ -16,8 +16,9 @@ import {
 } from '../../shared/sdk/services/custom';
 import { AgmMap } from '@agm/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrConfig, ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { RealtimeService } from '../../shared/realtime/realtime.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-messages',
@@ -74,6 +75,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
     private receptionApi: ReceptionApi,
     toasterService: ToastrService,
     private route: ActivatedRoute,
+    private translate: TranslateService,
     private rt: RealtimeService
   ) {
     this.toasterService = toasterService;

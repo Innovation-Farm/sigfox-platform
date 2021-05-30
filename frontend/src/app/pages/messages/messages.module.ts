@@ -10,6 +10,7 @@ import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import {AgmCoreModule} from '@agm/core';
 import {ClickCopyDirective} from './click-copy.directive';
 import {ToastrModule} from 'ngx-toastr';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -20,7 +21,10 @@ import {ToastrModule} from 'ngx-toastr';
     ToastrModule.forRoot(),
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
-    AgmCoreModule
+    AgmCoreModule,
+    TranslateModule.forChild({
+      extend: true
+    }),
   ],
   declarations: [
     MessagesComponent,
