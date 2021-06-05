@@ -64,9 +64,7 @@ class Message {
     const Device = this.model.app.models.Device;
     const Parser = this.model.app.models.Parser;
 
-    if (typeof data.deviceId === "undefined"
-      || typeof data.time === "undefined"
-      || typeof data.seqNumber === "undefined") {
+    if (typeof data.deviceId === "undefined" || typeof data.time === "undefined" || typeof data.seqNumber === "undefined") {
       return next('Missing "deviceId", "time" and "seqNumber"', data);
     }
 
@@ -91,10 +89,18 @@ class Message {
     device.id = message.deviceId;
     device.userId = userId;
 
-    if (message.deviceNamePrefix) device.name = message.deviceNamePrefix + "_" + message.deviceId;
-    if (message.parserId) device.parserId = message.parserId;
-    if (message.categoryId) device.categoryId = message.categoryId;
-    if (message.data_downlink) device.data_downlink = message.data_downlink;
+    if (message.deviceNamePrefix) {
+      device.name = message.deviceNamePrefix + "_" + message.deviceId;
+    }
+    if (message.parserId) {
+      device.parserId = message.parserId;
+    }
+    if (message.categoryId) {
+      device.categoryId = message.categoryId;
+    }
+    if (message.data_downlink) {
+      device.data_downlink = message.data_downlink;
+    }
 
     // Store the message duplicate flag and parserId
     const duplicate = message.duplicate;
@@ -187,8 +193,9 @@ class Message {
                 // Save a parser in the device and parse the message
                 console.log('Associating parser to device.');
                 deviceInstanceFunction.updateAttribute('parserId', parserId, (err: any, deviceUpdated: any) => {
-                  if (err) return next(err, data);
-                  else {
+                  if (err) {
+                    return next(err, data);
+                  } else {
                     // console.log("Updated device parser as: ", deviceUpdated);
                     Parser.findById(parserId, (err: any, parserInstance: any) => {
                       if (err) return next(err, data);
@@ -197,25 +204,22 @@ class Message {
                         deviceUpdated.Parser = parserInstance.toJSON();
 
                         // Decode the payload
-                        Parser.parsePayload(
-                          deviceUpdated,
-                          message,
-                          req,
-                          (err: any, data_parsed: any) => {
-                            if (err) {
-                              // console.error(err);
-                            } else {
-                              message.data_parsed = data_parsed;
-                              for (const p of message.data_parsed) {
-                                if (p.key === "time" && p.type === "date") {
-                                  message.createdAt = p.value;
-                                  break;
-                                }
+                        Parser.parsePayload(deviceUpdated, message, req, (err: any, data_parsed: any) => {
+                          if (err) {
+                            console.error("Parse error.");
+                            console.error(err);
+                          } else {
+                            message.data_parsed = data_parsed;
+                            for (const p of message.data_parsed) {
+                              if (p.key === "time" && p.type === "date") {
+                                message.createdAt = p.value;
+                                break;
                               }
                             }
-                            // Create message
-                            this.createMessageAndSendResponse(deviceUpdated, message, req, next);
-                          });
+                          }
+                          // Create message
+                          this.createMessageAndSendResponse(deviceUpdated, message, req, next);
+                        });
                       } else {
                         // Create message with no parsed data because of wrong parser id
                         console.error("The parserId of this device (" + deviceInstance.id + ") is linked to no existing parsers!");
@@ -261,6 +265,10 @@ class Message {
     const Message = this.model;
     const Alert = this.model.app.models.Alert;
     const Geoloc = this.model.app.models.Geoloc;
+    const onError = (err: any, res: any) => {
+      console.error(err);
+      console.log(res);
+    };
 
     // Ack from BIDIR callback
     if (message.ack) {
@@ -290,56 +298,46 @@ class Message {
         };
       }
       // Creating new message with its downlink data
-      Message.create(
-        message, // create
-        (err: any, messageInstance: any) => { // callback
-          if (err) console.error(err);
-          else if (messageInstance) {
-            // console.log('Created message as: ', messageInstance);
-            if (message.data_parsed) {
-              // Check if there is Geoloc in payload and create Geoloc object
-              Geoloc.createFromParsedPayload(
-                messageInstance,
-                (err: any, res: any) => {
-                });
-              // Trigger alerts (if any)
-              Alert.triggerByData(
-                message.data_parsed,
-                device,
-                req,
-                (err: any, res: any) => {
-                });
-            }
-          } else console.error("This message for device (" + message.deviceId + ") has already been created.");
-        });
+      Message.create( message, (err: any, messageInstance: any) => { // callback
+        if (err) {
+          console.error(err);
+        } else if (messageInstance) {
+          // console.log('Created message as: ', messageInstance);
+          if (message.data_parsed) {
+            // Check if there is Geoloc in payload and create Geoloc object
+            Geoloc.createFromParsedPayload(messageInstance, onError);
+            // Trigger alerts (if any)
+            Alert.triggerByData(message.data_parsed, device, req, onError);
+          }
+        } else {
+          console.error("This message for device (" + message.deviceId + ") has already been created.");
+        }
+      });
       // ack is true => quickly send response to the Sigfox backend (don't wait for message creation to be ended)
       return next(null, result);
     } else {
       // ack is false
       // Creating new message with no downlink data
-      Message.create(
-        message, // create
-        (err: any, messageInstance: any) => { // callback
-          if (err) return next(err, messageInstance);
-          else if (messageInstance) {
-            // console.log('Created message as: ', messageInstance);
-            if (message.data_parsed) {
-              // Check if there is Geoloc in payload and create Geoloc object
-              Geoloc.createFromParsedPayload(
-                messageInstance,
-                (err: any, res: any) => {
-                });
-              // Trigger alerts (if any)
-              Alert.triggerByData(
-                message.data_parsed,
-                device,
-                req,
-                (err: any, res: any) => {
-                });
-            }
-            return next(null, messageInstance);
-          } else return next(null, "This message for device (" + message.deviceId + ") has already been created.");
-        });
+      Message.create(message, (err: any, messageInstance: any) => { // callback
+        if (err) {
+          return next(err, messageInstance);
+        } else if (messageInstance) {
+          console.log('Created message as: ', messageInstance);
+          if (message.data_parsed) {
+            // Check if there is Geoloc in payload and create Geoloc object
+            Geoloc.createFromParsedPayload(messageInstance, onError);
+            // Trigger alerts (if any)
+            Alert.triggerByData(message.data_parsed, device, req, onError);
+          }
+          if (message.computedLocation) {
+            // Atlas location
+            Geoloc.createFromComputedLocation(messageInstance, onError);
+          }
+          return next(null, messageInstance);
+        } else {
+          return next(null, "This message for device (" + message.deviceId + ") has already been created.");
+        }
+      });
     }
   }
 

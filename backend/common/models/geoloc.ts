@@ -30,6 +30,18 @@ var GreinerHormann = require("greiner-hormann");
         }
       ]
     },
+    createFromComputedLocation: {
+      returns: { arg: "result", type: "array" },
+      http: { path: "/from-computed-location", verb: "post" },
+      accepts: [
+        {
+          arg: "message",
+          type: "Message",
+          required: true,
+          description: "The message object"
+        }
+      ]
+    },
     postSigfox: {
       accepts: [
         { arg: "req", type: "object", http: { source: "req" } },
@@ -392,70 +404,59 @@ class Geoloc {
     }
 
     if (hasWifiLocation) {
-      if (
-        this.HERE.app_id &&
-        this.HERE.app_code &&
-        !process.env.GOOGLE_API_KEY
-      ) {
+      if (this.HERE.app_id && this.HERE.app_code && !process.env.GOOGLE_API_KEY) {
         this.getHereGeolocation(geoloc_wifi)
           .then(value => {
-            console.log(
-              "[WiFi Geolocation] - Device located successfully with Here."
-            );
+            console.log("[WiFi Geolocation] - Device located successfully with Here.");
           })
           .catch(reason => {
-            console.log(
-              "[WiFi Geolocation] - Could not locate device with Here."
-            );
+            console.log("[WiFi Geolocation] - Could not locate device with Here.");
           });
-      } else if (
-        (!this.HERE.app_id || !this.HERE.app_code) &&
-        process.env.GOOGLE_API_KEY
-      ) {
+      } else if ((!this.HERE.app_id || !this.HERE.app_code) && process.env.GOOGLE_API_KEY) {
         this.getGoogleGeolocation(geoloc_wifi)
           .then(value => {
-            console.log(
-              "[WiFi Geolocation] - Device located successfully with Google."
-            );
+            console.log("[WiFi Geolocation] - Device located successfully with Google.");
           })
           .catch(reason => {
-            console.log(
-              "[WiFi Geolocation] - Could not locate device with Google."
-            );
+            console.log("[WiFi Geolocation] - Could not locate device with Google.");
           });
-      } else if (
-        this.HERE.app_id &&
-        this.HERE.app_code &&
-        process.env.GOOGLE_API_KEY
-      ) {
+      } else if (this.HERE.app_id && this.HERE.app_code && process.env.GOOGLE_API_KEY) {
         this.getHereGeolocation(geoloc_wifi)
           .then(value => {
-            console.log(
-              "[WiFi Geolocation] - Device located successfully with Here."
-            );
+            console.log("[WiFi Geolocation] - Device located successfully with Here.");
           })
           .catch(reason => {
-            console.log(
-              "[WiFi Geolocation] - Could not locate device with Here => falling back on Google."
-            );
+            console.log( "[WiFi Geolocation] - Could not locate device with Here => falling back on Google.");
             this.getGoogleGeolocation(geoloc_wifi)
               .then(value => {
-                console.log(
-                  "[WiFi Geolocation] - Device located successfully with Google."
-                );
+                console.log("[WiFi Geolocation] - Device located successfully with Google.");
               })
               .catch(reason => {
-                console.log(
-                  "[WiFi Geolocation] - Could not locate device with Google."
-                );
+                console.log("[WiFi Geolocation] - Could not locate device with Google.");
               });
           });
       } else {
-        console.error(
-          "[WiFi Geolocation] - Trying to position with WiFi but no service provider has been set - check your environment variables!"
-        );
+        console.error("[WiFi Geolocation] - Trying to position with WiFi but no service provider has been set - check your environment variables!");
       }
     }
+  }
+
+  private createFromComputedLocation(message: any, req: any): void {
+    const Geoloc = this.model;
+    const loc = message.computedLocation;
+
+    // Build the WiFi Geoloc object
+    const geoloc_wifi = new Geoloc();
+    geoloc_wifi.id = message.id + "wifi";
+    geoloc_wifi.type = "wifi";
+    geoloc_wifi.location = new loopback.GeoPoint({ lat: loc.lat, lng: loc.lng });
+    geoloc_wifi.createdAt = message.createdAt;
+    geoloc_wifi.userId = message.userId;
+    geoloc_wifi.messageId = message.id;
+    geoloc_wifi.deviceId = message.deviceId;
+    geoloc_wifi.wifiAccessPoints = [];
+
+    this.createGeoloc(geoloc_wifi);
   }
 
   getUbiscaleGeolocation(
@@ -575,9 +576,11 @@ class Geoloc {
   createGeoloc(geoloc: any) {
     const Geoloc = this.model;
     Geoloc.upsert(geoloc, (err: any, geolocInstance: any) => {
-      if (err) console.error(err);
+      if (err) {
+        console.error(err);
+      }
       else {
-        // console.log('Created geoloc as: ', geolocInstance);
+        console.log('Created geoloc as: ', geolocInstance);
       }
     });
   }
