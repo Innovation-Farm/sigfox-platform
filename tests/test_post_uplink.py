@@ -3,9 +3,10 @@
 import json
 import requests
 import time
+import sys
 
 headers = {
-    "Authorization": "0BiVPD5A5CQYvioB0CH0DkyzPg587qmkVdyIaY65TmLeTVXNVQARc2WSn0fQZPdm",
+    "Authorization": sys.argv[1],
     "Content-Type": "application/json",
 }
 
@@ -13,7 +14,7 @@ payload = {
     "deviceId": "00000001",
     "time": int(time.time()),
     "seqNumber": int(time.time()) % 4096,
-    "data": "fe0500090f423eb90b43"
+    "data": "80000000000000000000"
 }
 
 r = requests.post(
