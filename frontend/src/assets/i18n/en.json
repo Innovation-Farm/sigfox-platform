@@ -80,7 +80,12 @@
   "last_message": "Last message",
   "properties": "Properties",
   "success_rate": "Success rate",
-  "no_properties": "No properties yet",
+  "no_properties": "No properties",
+  "no_description": "No description",
+  "no_devices": "No devices",
   "parser": "Parser",
-  "category": "Category"
+  "category": "Category",
+  "associated_devices": "Associated devices",
+  "unshared": "Unshared",
+  "custom_dashboard_message": "This module is unstable. This module was not tested."
 }

@@ -6,6 +6,7 @@ import {NgxGaugeModule} from 'ngx-gauge';
 import {ToastrModule} from 'ngx-toastr';
 import {AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
 import {FormsModule} from '@angular/forms';
+import {AlertModule} from 'ngx-bootstrap/alert';
 import {MomentModule} from 'ngx-moment';
 import {DataTablesModule} from 'angular-datatables';
 import {ModalModule} from 'ngx-bootstrap/modal';
@@ -15,12 +16,14 @@ import {DirectionsDirective} from './directions.directive';
 import {AgmMarkerClustererModule} from '@agm/markerclusterer';
 import {ChartsModule} from 'ng2-charts';
 import {NvD3Module} from 'ng2-nvd3';
+import {TranslateModule} from '@ngx-translate/core';
 // d3 and nvd3 should be included somewhere
 import 'd3';
-import 'nvd3';
+//import 'nvd3';
 
 @NgModule({
   imports: [
+    AlertModule,
     CommonModule,
     CustomDashboardRoutingModule,
     NgxGaugeModule,
@@ -34,7 +37,10 @@ import 'nvd3';
     AgmMarkerClustererModule,
     AngularMultiSelectModule,
     ModalModule.forRoot(),
-    NvD3Module
+    NvD3Module,
+    TranslateModule.forChild({
+      extend: true
+    }),
   ],
   providers: [
     GoogleMapsAPIWrapper

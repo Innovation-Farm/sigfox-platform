@@ -15,7 +15,7 @@ import {RealtimeService} from "../../shared/realtime/realtime.service";
 import {Location} from '@angular/common';
 import {environment} from "../../../../environments/environment";
 
-declare let d3: any;
+declare const d3: any;
 declare const google: any;
 
 @Component({

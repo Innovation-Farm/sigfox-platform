@@ -1,5 +1,10 @@
 <div class="animated fadeIn">
 
+  <alert
+    type="warning">
+    <p translate>custom_dashboard_message</p>
+  </alert>
+
   <div class="row" *ngIf="!dashboardReady">
     Loading dashboard...
   </div>
@@ -1405,13 +1410,13 @@
               </ng-container>
               <!-- End Gauge -->
 
-              <!-- Chart -->
+              <!-- Chart
               <ng-container *ngIf="widget.type === 'line'">
                 <div *ngIf="widget.data">
                   <nvd3 [options]="widget.options.chartOptions" [data]="widget.data"></nvd3>
                 </div>
               </ng-container>
-              <!-- End Chart -->
+              End Chart -->
 
               <!-- Bar -->
               <ng-container

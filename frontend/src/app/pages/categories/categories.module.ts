@@ -12,6 +12,7 @@ import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
 import {LaddaModule} from 'angular2-ladda';
 import {HttpClientModule} from '@angular/common/http';
 import {DataTablesModule} from 'angular-datatables';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -25,7 +26,10 @@ import {DataTablesModule} from 'angular-datatables';
     ModalModule.forRoot(),
     AngularMultiSelectModule,
     LaddaModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forChild({
+      extend: true
+    }),
   ],
   declarations: [
     CategoriesComponent,

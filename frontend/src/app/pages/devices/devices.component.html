@@ -3,14 +3,13 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header">
-          <div *ngIf="!organization">
-            <i class="fa fa-microchip fa-lg text-device"></i>
+          <i class="fa fa-microchip fa-lg text-device"></i>
+          <ng-container *ngIf="!organization">
             <strong translate>devices</strong>
-          </div>
-          <div *ngIf="organization">
-            <i class="fa fa-microchip fa-lg text-device"></i>
+          </ng-container>
+          <ng-container *ngIf="organization">
             <strong translate>shared_devices</strong>
-          </div>
+          </ng-container>
         </div>
 
         <div *ngIf="loading" class="card-block">

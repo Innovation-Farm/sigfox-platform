@@ -82,6 +82,11 @@
   "properties": "プロパティ",
   "success_rate": "受信成功率",
   "no_properties": "なし",
+  "no_description": "なし",
+  "no_devices": "なし",
   "parser": "パーサー",
-  "category": "カテゴリー"
+  "category": "カテゴリー",
+  "associated_devices": "デバイス",
+  "unshared": "なし",
+  "custom_dashboard_message": "この機能は多くのバグを含んでおり、動作の保証はされていません。"
 }
