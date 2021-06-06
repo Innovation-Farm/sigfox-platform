@@ -74,5 +74,12 @@
   "data": "Data",
   "device": "Device",
   "geoloc": "Geoloc",
-  "seq_number": "Seq Number"
+  "seq_number": "Seq Number",
+
+  "search": "Search",
+  "info": "Info",
+  "last_message": "Last message",
+  "properties": "Properties",
+  "success_rate": "Success rate",
+  "no_properties": "No properties yet"
 }

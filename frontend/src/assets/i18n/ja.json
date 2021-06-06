@@ -73,7 +73,13 @@
   "date": "日時",
   "data": "データ",
   "device": "デバイス",
-  "geoloc": "位置情報",
+  "geoloc": "位置",
   "seq_number": "シーケンスNo",
-  "reception": "レセプション"
+  "reception": "レセプション",
+  "search": "検索",
+  "info": "デバイス情報",
+  "last_message": "最終受信日時",
+  "properties": "プロパティ",
+  "success_rate": "受信成功率",
+  "no_properties": "なし"
 }

@@ -16,9 +16,7 @@ import {
 } from '../../shared/sdk/services/custom';
 import { AgmMap } from '@agm/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { RealtimeService } from '../../shared/realtime/realtime.service';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-messages',
@@ -45,23 +43,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
   public messages: Message[] = [];
 
   public organization: Organization;
-  private organizations: Organization[] = [];
 
   private messageFilter: any;
-  private isLimit_100 = false;
-  private isLimit_500 = false;
-  private isLimit_1000 = false;
-  private isLimit_0 = false;
-
-  // Notifications
-  private toast: any;
-  private toasterService: ToastrService;
-  public toasterconfig = {
-    tapToDismiss: true,
-    timeout: 5000,
-    animation: 'fade'
-  };
-
   public filterQuery = '';
 
   private api: any;
@@ -73,16 +56,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
     private messageApi: MessageApi,
     private organizationApi: OrganizationApi,
     private receptionApi: ReceptionApi,
-    toasterService: ToastrService,
     private route: ActivatedRoute,
-    private translate: TranslateService,
     private rt: RealtimeService
   ) {
-    this.toasterService = toasterService;
   }
 
   ngOnInit(): void {
-    console.log('Messages: ngOnInit');
     // Get the logged in User object
     this.user = this.userApi.getCachedCurrent();
     this.userApi.getRoles(this.user.id).subscribe((roles: Role[]) => {
@@ -117,14 +96,14 @@ export class MessagesComponent implements OnInit, OnDestroy {
       if (this.filterQuery) {
         this.messageFilter = {
           order: 'createdAt DESC',
-          limit: 100,
+          limit: 30,
           include: ['Device', 'Geolocs'],
           where: { deviceId: this.filterQuery }
         };
       } else {
         this.messageFilter = {
           order: 'createdAt DESC',
-          limit: 100,
+          limit: 30,
           include: ['Device', 'Geolocs']
         };
       }
@@ -172,17 +151,11 @@ export class MessagesComponent implements OnInit, OnDestroy {
   deleteMessage(message: Message): void {
     this.userApi.destroyByIdMessages(this.user.id, message.id).subscribe(
       value => {
-        if (this.toast) {
-          this.toasterService.clear(this.toast.toastId);
-        }
-        this.toast = this.toasterService.success('Success', 'The message has been deleted.', this.toasterconfig);
+        console.log('succeeded destroy.');
       },
       err => {
-        if (this.toast) {
-          this.toasterService.clear(this.toast.toastId);
-        }
-        this.toast = this.toasterService.error('Error', err.error, this.toasterconfig);
-      }
+        console.error('faild destroy.');
+      },
     );
   }
 
@@ -216,7 +189,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
             .subscribe(
               (receptionsResult: Reception[]) => {
                 this.receptions = receptionsResult;
-                console.log(this.receptions);
                 if (this.receptions.length > 0) {
                   this.receptions.forEach((reception, i) => {
                     this.receptions[i].lat = Number(reception.lat);
@@ -241,46 +213,22 @@ export class MessagesComponent implements OnInit, OnDestroy {
       });
   }
 
-  searchFilter(limit: number) {
-    this.messages = [];
-    this.messagesReady = false;
-    // Reset buttons
-    this.isLimit_100 = limit == 100;
-    this.isLimit_500 = limit == 500;
-    this.isLimit_1000 = limit == 1000;
-    this.isLimit_0 = limit == 10000;
-
-    this.messageFilter.limit = limit;
-
-    console.log(this.messageFilter);
-
-    this.api
-      .getMessages(this.id, this.messageFilter)
-      .subscribe((messages: Message[]) => {
-        this.messages = messages;
-        this.messagesReady = true;
-      });
-  }
-
   download(): void {}
 
   rtHandler = (payload: any) => {
     const msg = payload.content;
-    if (
-      msg.userId == this.user.id ||
-      (this.organization &&
-        msg.Device.Organizations.map(x => x.id).includes(this.organization.id))
-    ) {
+    if (msg.userId == this.user.id || (this.organization && msg.Device.Organizations.map(x => x.id).includes(this.organization.id))) {
       if (payload.action == 'CREATE') {
         for (const geoloc of this.geolocBuffer) {
           if (geoloc.content.messageId === msg.id) {
             msg.Geolocs.push(geoloc.content);
             let index = this.geolocBuffer.indexOf(geoloc);
-            if (index > -1) this.geolocBuffer.splice(index, 1);
+            if (index > -1) {
+              this.geolocBuffer.splice(index, 1);
+            }
             break;
           }
         }
-        console.log(msg);
         this.messages.unshift(msg);
       } else if (payload.action == 'DELETE') {
         this.messages = this.messages.filter(msg => {
