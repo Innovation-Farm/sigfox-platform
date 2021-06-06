@@ -9,6 +9,7 @@ import {AceEditorModule} from 'ng2-ace-editor';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
 import {ClickCopyDirective} from './click-copy.directive';
 import {MomentModule} from "ngx-moment";
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -20,7 +21,10 @@ import {MomentModule} from "ngx-moment";
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     AceEditorModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    TranslateModule.forChild({
+      extend: true
+    }),
   ],
   declarations: [
     ParsersComponent,

@@ -3,38 +3,26 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <i class="fa fa-code fa-lg text-parser"></i> <strong>Parsers</strong>
+          <i class="fa fa-code fa-lg text-parser"></i><strong translate>parsers</strong>
         </div>
 
         <div class="card-block">
-          <a tooltip="Get help on the Sigfox Platform Wiki" href="https://github.com/IoT-Makers/sigfox-platform/wiki/Adding-a-custom-parser" target="_blank"><strong class="text-uppercase">Add a new parser </strong><i class="fa fa-question-circle text-parser"></i></a>
+          <a tooltip="{{ 'parser_tooltip' | translate }}" href="https://github.com/IoT-Makers/sigfox-platform/wiki/Adding-a-custom-parser" target="_blank"><strong class="text-uppercase" translate>add_new_parser</strong><i class="fa fa-question-circle text-parser"></i></a>
           <div class="row">
             <div class="col-sm-12 col-md-4 mt-1">
-              <p><strong>NB:</strong><i> Please use the variable name</i> <code>payload</code> <i>as it will contain the Sigfox
-                hexadecimal frame.</i>
+              <p><strong><span translate>nb</span>:</strong><i translate>parser_nb_a</i><code>payload</code><i translate>parser_nb_b</i>
               </p>
               <div class="form-group">
-                <label for="name">Name:</label>
+                <label for="name"><span translate>name</span>:</label>
                 <input type="text" required id="name" [(ngModel)]="parserToAdd.name" name="parser" class="form-control"
                        placeholder="Parser name">
               </div>
               <div class="form-group">
-                <label for="description">Description:</label>
+                <label for="description"><span translate>description</span>:</label>
                 <input type="text" required id="description" [(ngModel)]="parserToAdd.description" name="parser"
                        class="form-control" placeholder="Parser description">
               </div>
-              <!--<div class="form-group">
-                <label for="description">Hidden:&nbsp;</label>
-                <label class="switch switch-sm switch-3d switch-parser-outline-alt">
-                  <input [(ngModel)]="parserToAdd.hidden" type="checkbox" class="switch-input">
-                  <span class="switch-label"></span>
-                  <span class="switch-handle"></span>
-                </label>
-              </div>-->
-
-              <button type="button" class="btn btn-secondary btn-parser mb-1" (click)="create()">
-                Add Parser
-              </button>
+              <button type="button" class="btn btn-secondary btn-parser mb-1" (click)="create()" translate>add_parser</button>
             </div>
             <div class="col-md-8">
               <div ace-editor

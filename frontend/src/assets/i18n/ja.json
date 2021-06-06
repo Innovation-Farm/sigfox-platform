@@ -88,5 +88,11 @@
   "category": "カテゴリー",
   "associated_devices": "デバイス",
   "unshared": "なし",
-  "custom_dashboard_message": "この機能は多くのバグを含んでおり、動作の保証はされていません。"
+  "custom_dashboard_message": "この機能は現在安定していません。多くのバグを含んでおり、動作の保証はされていません。",
+  "parser_tooltip": "Sigfox Platform Wikiで使い方を確認",
+  "add_new_parser": "パーサーを追加",
+  "nb": "注意",
+  "parser_nb_a": "Sigfoxから送信されるペイロードが含まれる変数名は",
+  "parser_nb_b": "を使用してください。",
+  "add_parser": "追加"
 }

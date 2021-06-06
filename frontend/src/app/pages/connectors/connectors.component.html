@@ -15,83 +15,63 @@
             </div>
           </div>
         </div>
-        <div class="card-block">
-          <ng-container *ngIf="!connectorsReady">
-            Loading connectors...
-            <div class="sk-double-bounce">
-              <div class="sk-child sk-double-bounce1"></div>
-              <div class="sk-child sk-double-bounce2"></div>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="connectorsReady && !connectors.length">
-            No connectors yet...
-          </ng-container>
 
-          <!-- Table -->
-          <div *ngIf="connectors.length > 0" class="table-responsive">
-            <table datatable class="table table-hover table-outline">
+        <div *ngIf="!connectorsReady" class="card-block">
+          <span>Loading connectors...</span>
+          <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+          </div>
+          <div *ngIf="connectorsReady && !connectors.length">
+            <span>No connectors yet...</span>
+          </div>
+        </div>
+
+        <ng-container *ngIf="connectorsReady && connectors.length>0">
+          <div class="table-responsive">
+            <table class="table table-hover table-outline">
               <thead class="thead-inverse">
-              <tr>
-                <th class="text-center">
-                  <i class="fa fa-sort"></i>
-                  <span>Name</span>
-                </th>
-                <th class="text-center">
-                  <i class="fa fa-sort"></i>
-                  <span>Type</span>
-                </th>
-                <th class="text-center">
-                  <i class="fa fa-sort"></i>
-                  <span>Updated</span>
-                </th>
-                <th class="text-center">
-                  <span>Action</span>
-                </th>
-              </tr>
+                <tr>
+                  <th><span translate>name</span></th>
+                  <th><span translate>type</span></th>
+                  <th><span translate>updated</span></th>
+                  <th><span translate>action</span></th>
+                </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let connector of connectors; let i = index">
-                <td class="text-center text-connector">
-                  <strong>{{connector.name}}</strong>
-                </td>
-                <td class="text-center">
-                  <span>{{connector.type}}</span>
-                </td>
-                <td class="text-center">
-                  <strong>{{connector.updatedAt | amTimeAgo}}</strong>
-                </td>
-                <td class="text-center">
-                  <div class="btn-group-sm">
-                    <button
-                      class="btn btn-outline-primary btn-round"
-                      tooltip="Edit connector"
-                      (click)="openEditConnectorModal(connector)">
-                      <i class="fa fa-pencil fa-lg"></i>
-                    </button>
-                    <button
-                      class="btn btn-outline-danger btn-round ml-1"
-                      tooltip="Delete connector"
-                      (click)="openConfirmConnectorModal(connector)">
-                      <i class="fa fa-trash fa-lg"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                <tr *ngFor="let connector of connectors; let i = index">
+                  <td class="text-connector"><strong>{{connector.name}}</strong></td>
+                  <td><span>{{connector.type}}</span></td>
+                  <td><strong>{{connector.updatedAt | amTimeAgo}}</strong></td>
+                  <td>
+                    <div class="btn-group-sm">
+                      <button
+                        class="btn btn-outline-primary btn-round"
+                        tooltip="Edit connector"
+                        (click)="openEditConnectorModal(connector)">
+                        <i class="fa fa-pencil fa-lg"></i>
+                      </button>
+                      <button
+                        class="btn btn-outline-danger btn-round ml-1"
+                        tooltip="Delete connector"
+                        (click)="openConfirmConnectorModal(connector)">
+                        <i class="fa fa-trash fa-lg"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
-          <!-- End Table -->
-
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>
-
 </div>
 
 <div bsModal #addConnectorModal="bs-modal" class="modal fade" [config]="{ignoreBackdropClick: true}" tabindex="-1"
-     role="dialog"
-     aria-labelledby="addConnectorModal" aria-hidden="true">
+                                                                                                     role="dialog"
+                                                                                                     aria-labelledby="addConnectorModal" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <!-- Form Begin -->
     <div class="modal-content">
@@ -194,10 +174,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToAdd.login"
-                         placeholder="Nexmo API key"
-                         [(ngModel)]="connectorToAdd.login"
-                         required>
+                                     name="connectorToAdd.login"
+                                     placeholder="Nexmo API key"
+                                     [(ngModel)]="connectorToAdd.login"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -206,10 +186,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToAdd.password"
-                         placeholder="Nexmo API secret"
-                         [(ngModel)]="connectorToAdd.password"
-                         required>
+                                         name="connectorToAdd.password"
+                                         placeholder="Nexmo API secret"
+                                         [(ngModel)]="connectorToAdd.password"
+                                         required>
                 </div>
               </div>
               <div class="form-group row">
@@ -258,9 +238,9 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToAdd.login"
-                         placeholder="Connector login"
-                         [(ngModel)]="connectorToAdd.login">
+                                     name="connectorToAdd.login"
+                                     placeholder="Connector login"
+                                     [(ngModel)]="connectorToAdd.login">
                 </div>
               </div>
               <div class="form-group row">
@@ -269,9 +249,9 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToAdd.password"
-                         placeholder="Connector password"
-                         [(ngModel)]="connectorToAdd.password">
+                                         name="connectorToAdd.password"
+                                         placeholder="Connector password"
+                                         [(ngModel)]="connectorToAdd.password">
                 </div>
               </div>
             </ng-container>
@@ -284,10 +264,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToAdd.login"
-                         placeholder="Connector login"
-                         [(ngModel)]="connectorToAdd.login"
-                         required>
+                                     name="connectorToAdd.login"
+                                     placeholder="Connector login"
+                                     [(ngModel)]="connectorToAdd.login"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -296,10 +276,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToAdd.password"
-                         placeholder="Connector password"
-                         [(ngModel)]="connectorToAdd.password"
-                         required>
+                                         name="connectorToAdd.password"
+                                         placeholder="Connector password"
+                                         [(ngModel)]="connectorToAdd.password"
+                                         required>
                 </div>
               </div>
             </ng-container>
@@ -312,9 +292,9 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToAdd.login"
-                         placeholder="Connector login"
-                         [(ngModel)]="connectorToAdd.login">
+                                     name="connectorToAdd.login"
+                                     placeholder="Connector login"
+                                     [(ngModel)]="connectorToAdd.login">
                 </div>
               </div>
               <div class="form-group row">
@@ -323,9 +303,9 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToAdd.password"
-                         placeholder="Connector password"
-                         [(ngModel)]="connectorToAdd.password">
+                                         name="connectorToAdd.password"
+                                         placeholder="Connector password"
+                                         [(ngModel)]="connectorToAdd.password">
                 </div>
               </div>
               <div class="form-group row">
@@ -334,10 +314,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToAdd.host"
-                         placeholder="MQTT host"
-                         [(ngModel)]="connectorToAdd.host"
-                         required>
+                                     name="connectorToAdd.host"
+                                     placeholder="MQTT host"
+                                     [(ngModel)]="connectorToAdd.host"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -346,10 +326,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="number" class="form-control"
-                         name="connectorToAdd.port"
-                         placeholder="MQTT port"
-                         [(ngModel)]="connectorToAdd.port"
-                         required>
+                                       name="connectorToAdd.port"
+                                       placeholder="MQTT port"
+                                       [(ngModel)]="connectorToAdd.port"
+                                       required>
                 </div>
               </div>
               <div class="form-group row">
@@ -358,10 +338,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToAdd.topic"
-                         placeholder="MQTT topic"
-                         [(ngModel)]="connectorToAdd.topic"
-                         required>
+                                     name="connectorToAdd.topic"
+                                     placeholder="MQTT topic"
+                                     [(ngModel)]="connectorToAdd.topic"
+                                     required>
                 </div>
               </div>
             </ng-container>
@@ -374,10 +354,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToAdd.login"
-                         placeholder="Connector login"
-                         [(ngModel)]="connectorToAdd.login"
-                         required>
+                                     name="connectorToAdd.login"
+                                     placeholder="Connector login"
+                                     [(ngModel)]="connectorToAdd.login"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -386,10 +366,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToAdd.password"
-                         placeholder="Connector password"
-                         [(ngModel)]="connectorToAdd.password"
-                         required>
+                                         name="connectorToAdd.password"
+                                         placeholder="Connector password"
+                                         [(ngModel)]="connectorToAdd.password"
+                                         required>
                 </div>
               </div>
               <div class="form-group row">
@@ -398,10 +378,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="email" class="form-control"
-                         name="connectorToAdd.recipient"
-                         placeholder="Recipient email"
-                         [(ngModel)]="connectorToAdd.recipient"
-                         required>
+                                      name="connectorToAdd.recipient"
+                                      placeholder="Recipient email"
+                                      [(ngModel)]="connectorToAdd.recipient"
+                                      required>
                 </div>
               </div>
             </ng-container>
@@ -412,7 +392,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="addConnectorModal.hide()">Close</button>
           <button type="submit" class="btn btn-success" [disabled]="!addConnectorForm.form.valid"><i
-            class="fa fa-plus-circle"></i> Add connector
+                                class="fa fa-plus-circle"></i> Add connector
           </button>
         </div>
       </form>
@@ -421,8 +401,8 @@
 </div><!-- /.modal -->
 
 <div bsModal #editConnectorModal="bs-modal" class="modal fade" [config]="{ignoreBackdropClick: true}" tabindex="-1"
-     role="dialog"
-     aria-labelledby="editConnectorModal" aria-hidden="true">
+                                                                                                      role="dialog"
+                                                                                                      aria-labelledby="editConnectorModal" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <!-- Form Begin -->
     <div class="modal-content">
@@ -442,10 +422,10 @@
               </label>
               <div class="col-md-9">
                 <input type="text" class="form-control"
-                       name="connectorToEdit.name"
-                       placeholder="Connector name"
-                       [(ngModel)]="connectorToEdit.name"
-                       required>
+                                   name="connectorToEdit.name"
+                                   placeholder="Connector name"
+                                   [(ngModel)]="connectorToEdit.name"
+                                   required>
               </div>
             </div>
             <div class="form-group row">
@@ -471,9 +451,9 @@
               </label>
               <div class="col-md-9">
                 <input type="text" class="form-control"
-                       name="connectorToEdit.description"
-                       placeholder="Connector description"
-                       [(ngModel)]="connectorToEdit.description">
+                                   name="connectorToEdit.description"
+                                   placeholder="Connector description"
+                                   [(ngModel)]="connectorToEdit.description">
               </div>
             </div>
             <!-- Sigfox API -->
@@ -484,10 +464,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToEdit.login"
-                         placeholder="Connector login"
-                         [(ngModel)]="connectorToEdit.login"
-                         required>
+                                     name="connectorToEdit.login"
+                                     placeholder="Connector login"
+                                     [(ngModel)]="connectorToEdit.login"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -496,10 +476,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToEdit.password"
-                         placeholder="Connector password"
-                         [(ngModel)]="connectorToEdit.password"
-                         required>
+                                         name="connectorToEdit.password"
+                                         placeholder="Connector password"
+                                         [(ngModel)]="connectorToEdit.password"
+                                         required>
                 </div>
               </div>
             </ng-container>
@@ -512,10 +492,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToEdit.login"
-                         placeholder="Nexmo API key"
-                         [(ngModel)]="connectorToEdit.login"
-                         required>
+                                     name="connectorToEdit.login"
+                                     placeholder="Nexmo API key"
+                                     [(ngModel)]="connectorToEdit.login"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -524,28 +504,28 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToEdit.password"
-                         placeholder="Nexmo API secret"
-                         [(ngModel)]="connectorToEdit.password"
-                         required>
+                                         name="connectorToEdit.password"
+                                         placeholder="Nexmo API secret"
+                                         [(ngModel)]="connectorToEdit.password"
+                                         required>
                 </div>
               </div>
               <!--<div class="form-group row">
                 <label class="col-md-3 form-control-label">Source number
-                  <small class="text-danger">*</small>
+                <small class="text-danger">*</small>
                 </label>
                 <div class="col-md-9">
-                  <int-phone-prefix name="connectorToEdit.host" [(ngModel)]="connectorToEdit.host" required></int-phone-prefix>
+                <int-phone-prefix name="connectorToEdit.host" [(ngModel)]="connectorToEdit.host" required></int-phone-prefix>
                 </div>
-              </div>-->
-              <div class="form-group row">
-                <label class="col-md-3 form-control-label">Destination number
-                  <small class="text-danger">*</small>
-                </label>
-                <div class="col-md-9">
-                  <int-phone-prefix name="connectorToEdit.recipient" [(ngModel)]="connectorToEdit.recipient" required></int-phone-prefix>
+                </div>-->
+                <div class="form-group row">
+                  <label class="col-md-3 form-control-label">Destination number
+                    <small class="text-danger">*</small>
+                  </label>
+                  <div class="col-md-9">
+                    <int-phone-prefix name="connectorToEdit.recipient" [(ngModel)]="connectorToEdit.recipient" required></int-phone-prefix>
+                  </div>
                 </div>
-              </div>
             </ng-container>
             <!-- End Nexmo SMS -->
             <!-- Webhook -->
@@ -556,10 +536,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToEdit.url"
-                         placeholder="Request URL"
-                         [(ngModel)]="connectorToEdit.url"
-                         required>
+                                     name="connectorToEdit.url"
+                                     placeholder="Request URL"
+                                     [(ngModel)]="connectorToEdit.url"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -568,9 +548,9 @@
                 </label>
                 <div class="col-md-9">
                   <select class="form-control" size="1"
-                          name="connectorToEdit.method"
-                          [(ngModel)]="connectorToEdit.method"
-                          required>
+                                               name="connectorToEdit.method"
+                                               [(ngModel)]="connectorToEdit.method"
+                                               required>
                     <option [ngValue]="method" *ngFor="let method of ['GET', 'POST', 'PUT']">{{method}}</option>
                   </select>
                 </div>
@@ -581,9 +561,9 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToEdit.login"
-                         placeholder="Connector login"
-                         [(ngModel)]="connectorToEdit.login">
+                                     name="connectorToEdit.login"
+                                     placeholder="Connector login"
+                                     [(ngModel)]="connectorToEdit.login">
                 </div>
               </div>
               <div class="form-group row">
@@ -592,9 +572,9 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToEdit.password"
-                         placeholder="Connector password"
-                         [(ngModel)]="connectorToEdit.password">
+                                         name="connectorToEdit.password"
+                                         placeholder="Connector password"
+                                         [(ngModel)]="connectorToEdit.password">
                 </div>
               </div>
             </ng-container>
@@ -607,10 +587,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToEdit.login"
-                         placeholder="Connector login"
-                         [(ngModel)]="connectorToEdit.login"
-                         required>
+                                     name="connectorToEdit.login"
+                                     placeholder="Connector login"
+                                     [(ngModel)]="connectorToEdit.login"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -619,10 +599,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToEdit.password"
-                         placeholder="Connector password"
-                         [(ngModel)]="connectorToEdit.password"
-                         required>
+                                         name="connectorToEdit.password"
+                                         placeholder="Connector password"
+                                         [(ngModel)]="connectorToEdit.password"
+                                         required>
                 </div>
               </div>
             </ng-container>
@@ -635,9 +615,9 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToEdit.login"
-                         placeholder="Connector login"
-                         [(ngModel)]="connectorToEdit.login">
+                                     name="connectorToEdit.login"
+                                     placeholder="Connector login"
+                                     [(ngModel)]="connectorToEdit.login">
                 </div>
               </div>
               <div class="form-group row">
@@ -646,9 +626,9 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToEdit.password"
-                         placeholder="Connector password"
-                         [(ngModel)]="connectorToEdit.password">
+                                         name="connectorToEdit.password"
+                                         placeholder="Connector password"
+                                         [(ngModel)]="connectorToEdit.password">
                 </div>
               </div>
               <div class="form-group row">
@@ -657,10 +637,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToEdit.host"
-                         placeholder="MQTT host"
-                         [(ngModel)]="connectorToEdit.host"
-                         required>
+                                     name="connectorToEdit.host"
+                                     placeholder="MQTT host"
+                                     [(ngModel)]="connectorToEdit.host"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -669,10 +649,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="number" class="form-control"
-                         name="connectorToEdit.port"
-                         placeholder="MQTT port"
-                         [(ngModel)]="connectorToEdit.port"
-                         required>
+                                       name="connectorToEdit.port"
+                                       placeholder="MQTT port"
+                                       [(ngModel)]="connectorToEdit.port"
+                                       required>
                 </div>
               </div>
               <div class="form-group row">
@@ -681,10 +661,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToEdit.topic"
-                         placeholder="MQTT topic"
-                         [(ngModel)]="connectorToEdit.topic"
-                         required>
+                                     name="connectorToEdit.topic"
+                                     placeholder="MQTT topic"
+                                     [(ngModel)]="connectorToEdit.topic"
+                                     required>
                 </div>
               </div>
             </ng-container>
@@ -697,10 +677,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="text" class="form-control"
-                         name="connectorToEdit.login"
-                         placeholder="Connector login"
-                         [(ngModel)]="connectorToEdit.login"
-                         required>
+                                     name="connectorToEdit.login"
+                                     placeholder="Connector login"
+                                     [(ngModel)]="connectorToEdit.login"
+                                     required>
                 </div>
               </div>
               <div class="form-group row">
@@ -709,10 +689,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="password" class="form-control"
-                         name="connectorToEdit.password"
-                         placeholder="Connector password"
-                         [(ngModel)]="connectorToEdit.password"
-                         required>
+                                         name="connectorToEdit.password"
+                                         placeholder="Connector password"
+                                         [(ngModel)]="connectorToEdit.password"
+                                         required>
                 </div>
               </div>
               <div class="form-group row">
@@ -721,10 +701,10 @@
                 </label>
                 <div class="col-md-9">
                   <input type="email" class="form-control"
-                         name="connectorToEdit.recipient"
-                         placeholder="Recipient email"
-                         [(ngModel)]="connectorToEdit.recipient"
-                         required>
+                                      name="connectorToEdit.recipient"
+                                      placeholder="Recipient email"
+                                      [(ngModel)]="connectorToEdit.recipient"
+                                      required>
                 </div>
               </div>
             </ng-container>
@@ -736,7 +716,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="editConnectorModal.hide()">Close</button>
           <button class="btn btn-primary" [disabled]="!editConnectorForm.form.valid" (click)="editConnector()"><i
-            class="fa fa-check"></i> Update
+                  class="fa fa-check"></i> Update
           </button>
         </div>
       </form>
@@ -745,8 +725,8 @@
 </div><!-- /.modal -->
 
 <div bsModal #confirmConnectorModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-     aria-labelledby="confirmConnectorModal"
-     aria-hidden="true">
+                                                                                aria-labelledby="confirmConnectorModal"
+                                                                                aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

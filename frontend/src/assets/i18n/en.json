@@ -87,5 +87,12 @@
   "category": "Category",
   "associated_devices": "Associated devices",
   "unshared": "Unshared",
-  "custom_dashboard_message": "This module is unstable. This module was not tested."
+  "custom_dashboard_message": "This module is unstable. This module was not tested.",
+  "parser_tooltip": "Get help on the Sigfox Platform Wiki",
+  "add_new_parser": "Add a new parser",
+  "nb": "NB",
+  "parser_nb_a": "Please use the variable name",
+  "parser_nb_b": "as it will contain the Sigfox hexadecimal frame.",
+  "add_parser": "Add Parser"
+
 }
