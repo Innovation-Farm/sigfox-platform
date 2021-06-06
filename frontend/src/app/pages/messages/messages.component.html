@@ -19,7 +19,7 @@
           <span>No messages yet...</span>
         </div>
 
-        <ng-container *ngIf="messages.length>0">
+        <ng-container *ngIf="messagesReady && messages.length>0">
           <div class="table-responsive">
             <table class="table table-hover">
               <thead class="thead-inverse">

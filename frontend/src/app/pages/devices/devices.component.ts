@@ -9,11 +9,10 @@ import {
   ParserApi,
   UserApi
 } from '../../shared/sdk/services/custom';
-import {ToastrConfig, ToastrService} from 'ngx-toastr';
 import {
   Component,
   ElementRef,
-  Inject, Input,
+  Inject,
   OnDestroy,
   OnInit,
   QueryList,
@@ -28,6 +27,7 @@ import {ActivatedRoute} from '@angular/router';
 import {RealtimeService} from "../../shared/realtime/realtime.service";
 import {Observable} from "rxjs";
 import {DataFilterPipe} from "./datafilterpipe";
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-devices',
@@ -73,18 +73,9 @@ export class DevicesComponent implements OnInit, OnDestroy {
   private loadingParseMessages = false;
   private loadingDownload = false;
 
-  private mapLat = 48.858093;
-  private mapLng = 2.294694;
-  private mapZoom = 2;
-
-  // Notifications
-  private toast;
-  private toasterService: ToastrService;
-  public toasterconfig = {
-    tapToDismiss: true,
-    timeout: 5000,
-    animation: 'fade'
-  };
+  private mapLat = 36.3155448;
+  private mapLng = 138.506677;
+  private mapZoom = 6;
 
   public selectOrganizationsSettings = {
     singleSelection: false,
@@ -96,7 +87,7 @@ export class DevicesComponent implements OnInit, OnDestroy {
   };
 
   // Pagination
-  rowsOnPage = 15;
+  rowsOnPage = 30;
   activePage = 1;
   total: number;
   loading: boolean;
@@ -104,6 +95,7 @@ export class DevicesComponent implements OnInit, OnDestroy {
 
   private api;
   private id;
+  private timer;
 
   constructor(private rt: RealtimeService,
               private userApi: UserApi,
@@ -112,12 +104,10 @@ export class DevicesComponent implements OnInit, OnDestroy {
               private appSettingApi: AppSettingApi,
               private deviceApi: DeviceApi,
               private elRef: ElementRef,
-              toasterService: ToastrService,
               @Inject(DOCUMENT) private document: any,
               private messageApi: MessageApi,
               private route: ActivatedRoute,
               private http: HttpClient) {
-    this.toasterService = toasterService;
   }
 
   ngOnInit(): void {
@@ -153,8 +143,7 @@ export class DevicesComponent implements OnInit, OnDestroy {
 
   download(type: string) {
     this.loadingDownload = true;
-    const url = 'https://api.' + this.document.location.hostname + '/api/Devices/download/' + this.deviceToEdit.id + '/' + type + '?access_token=' + this.userApi.getCurrentToken().id;
-    //const url = 'http://localhost:3000/api/Devices/download/' + this.deviceToEdit.id + '/' + type + '?access_token=' + this.userApi.getCurrentToken().id;
+    const url = environment.callbackUrl + '/api/Devices/download/' + this.deviceToEdit.id + '/' + type + '?access_token=' + this.userApi.getCurrentToken().id;
 
     this.http.get(url, {responseType: 'blob'}).subscribe(res => {
       const blob: Blob = new Blob([res], {type: 'text/csv'});
@@ -164,10 +153,6 @@ export class DevicesComponent implements OnInit, OnDestroy {
       this.loadingDownload = false;
     }, err => {
       console.log(err);
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.error('Error', 'Server error', this.toasterconfig);
       this.loadingDownload = false;
     });
   }
@@ -192,7 +177,11 @@ export class DevicesComponent implements OnInit, OnDestroy {
     this.unsubscribe();
     this.subscribe();
 
-    this.getPage(1);
+    this.loading = true;
+    this.loadDevice(1).subscribe((r: any) => {
+      this.loading = false;
+      this.displayedDevices = r;
+    });
     this.parserApi.find({order: 'createdAt DESC'}).subscribe((result: any) => {
       this.parsers = result;
     });
@@ -222,24 +211,11 @@ export class DevicesComponent implements OnInit, OnDestroy {
   };
 
   private loadDevice(page: number): Observable<any> {
-    this.queryFilter.skip = this.rowsOnPage * (page - 1);
-    this.api.countDevices(this.id, this.queryFilter.where).subscribe((result: any) => {
-      this.total = result.count;
-    });
+    console.log("load device");
     return this.api.getDevices(this.id, this.queryFilter);
   }
 
-  getPage(page: number) {
-    this.loading = true;
-    this.loadDevice(page).subscribe((r:any) => {
-      this.loading = false;
-      this.activePage = page;
-      this.displayedDevices = r;
-    });
-  }
-
   // search box
-  timer: number;
   onKey(event: KeyboardEvent, value: string) { // with type info
     if (event.key === "Enter") return;
     clearInterval(this.timer);
@@ -252,7 +228,7 @@ export class DevicesComponent implements OnInit, OnDestroy {
     this.searchFilter = value;
     clearInterval(this.timer);
     this.queryFilter.where = {or: [{id: {regexp: `/.*${value}.*/i`}}, {name: {regexp: `/.*${value}.*/i`}}]};
-    this.getPage(1);
+    this.loadDevice(1);
   }
 
   ngOnDestroy(): void {
@@ -273,15 +249,9 @@ export class DevicesComponent implements OnInit, OnDestroy {
   updateDevice(): void {
     this.edit = false;
     this.api.updateByIdDevices(this.id, this.deviceToEdit.id, this.deviceToEdit).subscribe(value => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.success('Success', 'The device was successfully updated.', this.toasterconfig);
+      console.log('succeeded update: ', value);
     }, err => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.error('Error', 'Not allowed.', this.toasterconfig);
+      console.error(err);
     });
   }
 
@@ -292,10 +262,7 @@ export class DevicesComponent implements OnInit, OnDestroy {
         console.log(category);
         this.deviceToEdit.properties = category.properties;
       }, err => {
-        if (this.toast) {
-          this.toasterService.clear(this.toast.toastId);
-        }
-        this.toast = this.toasterService.error('Error', 'Not allowed.', this.toasterconfig);
+        console.error(err);
       });
     }
 
@@ -323,24 +290,13 @@ export class DevicesComponent implements OnInit, OnDestroy {
           } else {
             console.log('Finished process');
             this.loadingFromBackend = false;
-            if (this.toast) {
-              this.toasterService.clear(this.toast.toastId);
-            }
-            this.toast = this.toasterService.success('Success', 'Retrieved messages from Sigfox Backend complete.', this.toasterconfig);
           }
         }, err => {
-          if (this.toast) {
-            this.toasterService.clear(this.toast.toastId);
-          }
-          this.toast = this.toasterService.error('Error', err.message.message, this.toasterconfig);
           this.loadingFromBackend = false;
         });
         this.confirmDBModal.hide();
       } else {
-        if (this.toast) {
-          this.toasterService.clear(this.toast.toastId);
-        }
-        this.toast = this.toasterService.warning('Warning', 'Please refer your Sigfox API credentials in the connectors page first.', this.toasterconfig);
+        console.warn('Warning', 'Please refer your Sigfox API credentials in the connectors page first.');
       }
     });
   }
@@ -351,16 +307,10 @@ export class DevicesComponent implements OnInit, OnDestroy {
     this.parserApi.parseAllMessages(deviceId, null, null).subscribe(result => {
       this.loadingParseMessages = false;
       if (result.message === 'Success') {
-        if (this.toast) {
-          this.toasterService.clear(this.toast.toastId);
-        }
-        this.toast = this.toasterService.success('Success', 'All the messages were successfully parsed.', this.toasterconfig);
+        console.log('Success', 'All the messages were successfully parsed.');
       } else {
         this.loadingParseMessages = false;
-        if (this.toast) {
-          this.toasterService.clear(this.toast.toastId);
-        }
-        this.toast = this.toasterService.warning('Warning', result.message, this.toasterconfig);
+        console.warn(result.message);
       }
     });
     this.confirmParseModal.hide();
@@ -394,15 +344,9 @@ export class DevicesComponent implements OnInit, OnDestroy {
     this.userApi.destroyByIdDevices(this.user.id, this.deviceToRemove.id).subscribe(value => {
       this.edit = false;
       this.confirmModal.hide();
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.success('Success', 'The device and its messages were successfully deleted.', this.toasterconfig);
+      console.log('The device and its messages were successfully deleted.');
     }, err => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.error('Error', 'Not allowed.', this.toasterconfig);
+      console.error('Not allowed.');
     });
   }
 
@@ -439,10 +383,7 @@ export class DevicesComponent implements OnInit, OnDestroy {
           this.deviceToEdit.Organizations.push(org);
         });
       }, err => {
-        if (this.toast) {
-          this.toasterService.clear(this.toast.toastId);
-        }
-        this.toast = this.toasterService.error('Error', err.error, this.toasterconfig);
+        console.error(err.error);
       });
     });
   }
@@ -450,16 +391,10 @@ export class DevicesComponent implements OnInit, OnDestroy {
   unshare(orga, device, index): void {
     this.deviceApi.unlinkOrganizations(device.id, orga.id).subscribe(results => {
       console.log(results);
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.success('Success', 'The device has been removed from ' + orga.name + '.', this.toasterconfig);
+      console.log('The device has been removed from ' + orga.name);
       this.deviceToEdit.Organizations.splice(index, 1);
     }, err => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.error('Error', err.message, this.toasterconfig);
+      console.error(err.message);
     });
   }
 

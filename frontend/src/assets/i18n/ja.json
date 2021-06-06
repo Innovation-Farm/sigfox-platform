@@ -81,5 +81,7 @@
   "last_message": "最終受信日時",
   "properties": "プロパティ",
   "success_rate": "受信成功率",
-  "no_properties": "なし"
+  "no_properties": "なし",
+  "parser": "パーサー",
+  "category": "カテゴリー"
 }

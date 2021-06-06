@@ -11,7 +11,7 @@ headers = {
 }
 
 payload = {
-    "deviceId": "1F13FC2",
+    "deviceId": "1F13F" + str(int(time.time()) % 100),
     "time": int(time.time()),
     "seqNumber": int(time.time()) % 4096,
     "data": "011e00030101010000000000",

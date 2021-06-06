@@ -8,13 +8,12 @@ import {DevicesRoutingModule} from './devices-routing.module';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import {TabsModule} from 'ngx-bootstrap/tabs';
 import {TooltipModule} from 'ngx-bootstrap/tooltip';
-import {ToastrModule} from 'ngx-toastr';
 import {LaddaModule} from 'angular2-ladda';
 import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
 import {HttpClientModule} from '@angular/common/http';
 import {DataFilterPipe} from './datafilterpipe';
 import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
-import {DataTablesModule} from 'angular-datatables';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -22,16 +21,17 @@ import {DataTablesModule} from 'angular-datatables';
     CommonModule,
     MomentModule,
     NgxPaginationModule,
-    DataTablesModule,
     FormsModule,
     TabsModule.forRoot(),
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     AgmCoreModule,
     LaddaModule,
-    ToastrModule.forRoot(),
     AngularMultiSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forChild({
+      extend: true
+    }),
   ],
   declarations: [
     DevicesComponent,
