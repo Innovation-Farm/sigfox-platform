@@ -1,6 +1,5 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AlertApi, DeviceApi, UserApi} from '../../shared/sdk/services/custom';
-import {ToastrConfig, ToastrService} from 'ngx-toastr';
 import {Alert, AlertGeofence, AlertValue, Connector, Device, Property, User} from '../../shared/sdk/models';
 import * as L from 'leaflet';
 import {icon, LatLng, latLng, tileLayer} from 'leaflet';
@@ -122,22 +121,11 @@ export class AlertsComponent implements OnInit, OnDestroy {
     {"id": "exit", "itemName": "exit"}];
   private geofenceDirections = [];
 
-  // Notifications
-  private toast;
-  private toasterService: ToastrService;
-  public toasterconfig: {
-    tapToDismiss: true,
-    timeout: 5000,
-    animation: 'fade'
-  };
-
   constructor(private rt: RealtimeService,
               private userApi: UserApi,
               private deviceApi: DeviceApi,
               private alertApi: AlertApi,
-              private elRef: ElementRef,
-              toasterService: ToastrService) {
-    this.toasterService = toasterService;
+              private elRef: ElementRef) {
   }
 
   /**
@@ -299,10 +287,7 @@ export class AlertsComponent implements OnInit, OnDestroy {
         }
       });
       if (connectors.length === 0) {
-        if (this.toast) {
-          this.toasterService.clear(this.toast.toastId);
-        }
-        this.toast = this.toasterService.warning('Warning', 'Please create a connector in the "Connectors" page first.', this.toasterconfig);
+        console.warn('Please create a connector in the "Connectors" page first.');
       }
     });
   }
@@ -390,30 +375,18 @@ export class AlertsComponent implements OnInit, OnDestroy {
 
   removeAlert(): void {
     this.userApi.destroyByIdAlerts(this.user.id, this.alertToRemove.id).subscribe(value => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.success('Success', 'Alert was successfully removed.', this.toasterconfig);
+      console.log('Alert was successfully removed.');
     }, err => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.error('Error', err.error.message, this.toasterconfig);
+      console.error(err.error.message);
     });
     this.confirmModal.hide();
   }
 
   testAlert(alert: Alert): void {
     this.alertApi.test(alert.id).subscribe(value => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.success('Success', 'Alert was successfully tested.', this.toasterconfig);
+      console.log('Alert was successfully tested.');
     }, err => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.error('Error', err.error.message, this.toasterconfig);
+      console.error(err.error.message);
     });
   }
 
@@ -423,40 +396,34 @@ export class AlertsComponent implements OnInit, OnDestroy {
     }
     if (this.alertToAddOrEdit.key === 'geoloc') {
       if (!this.alertToAddOrEdit.geofence.length) {
-        this.toast = this.toasterService.error('Missing geofence', 'Please add at least one geofence', this.toasterconfig);
+        console.error('Missing geofence', 'Please add at least one geofence');
         return;
       }
       this.setGeofenceDirections();
     }
     this.userApi.updateByIdAlerts(this.user.id, alert.id, alert).subscribe(value => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
       switch (key) {
         case 'active':
           if (alert.active) {
-            this.toast = this.toasterService.success('Success', 'Alert was successfully activated.', this.toasterconfig);
+            console.log('Alert was successfully activated.');
           } else {
-            this.toast = this.toasterService.info('Success', 'Alert was successfully deactivated.');
+            console.info('Alert was successfully deactivated.');
           }
           break;
         case 'oneshot':
           if (alert.one_shot) {
-            this.toast = this.toasterService.success('Success', 'Alert was successfully set for one shot only.', this.toasterconfig);
+            console.log('Alert was successfully set for one shot only.');
           } else {
-            this.toast = this.toasterService.info('Success', 'Alert will always trigger.');
+            console.info('Alert will always trigger.');
           }
           break;
         default:
-          this.toast = this.toasterService.success('Success', 'Alert was successfully updated.', this.toasterconfig);
+          console.log('Alert was successfully updated.');
           this.addOrEditAlertModal.hide();
           break;
       }
     }, err => {
-      if (this.toast) {
-        this.toasterService.clear(this.toast.toastId);
-      }
-      this.toast = this.toasterService.error('Error', err.error.message, this.toasterconfig);
+      console.error(err.error.message);
     });
   }
 
@@ -465,20 +432,16 @@ export class AlertsComponent implements OnInit, OnDestroy {
   addAlert(): void {
     if (this.alertToAddOrEdit.key === 'geoloc') {
       if (!this.alertToAddOrEdit.geofence.length) {
-        this.toast = this.toasterService.error('Missing geofence', 'Please add at least one geofence');
+        console.error('Please add at least one geofence');
         return;
       }
       this.setGeofenceDirections();
     }
     this.userApi.createAlerts(this.user.id, this.alertToAddOrEdit).subscribe((alert: Alert) => {
-      if (this.toast)
-        this.toasterService.clear(this.toast.toastId);
-      this.toast = this.toasterService.success('Success', 'Alert was successfully created.', this.toasterconfig);
+      console.log('Alert was successfully created.');
       this.addOrEditAlertModal.hide();
     }, err => {
-      if (this.toast)
-        this.toasterService.clear(this.toast.toastId);
-      this.toast = this.toasterService.error('Error', 'Please fill in the alert form.' + err.error.message, this.toasterconfig);
+      console.error('Please fill in the alert form.' + err.error.message);
     });
   }
 
@@ -536,7 +499,6 @@ export class AlertsComponent implements OnInit, OnDestroy {
       }
     });
   }
-
 
   ngOnDestroy(): void {
     console.log('Alerts: ngOnDestroy');

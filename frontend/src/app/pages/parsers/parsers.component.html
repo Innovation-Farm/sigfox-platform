@@ -10,17 +10,29 @@
           <a tooltip="{{ 'parser_tooltip' | translate }}" href="https://github.com/IoT-Makers/sigfox-platform/wiki/Adding-a-custom-parser" target="_blank"><strong class="text-uppercase" translate>add_new_parser</strong><i class="fa fa-question-circle text-parser"></i></a>
           <div class="row">
             <div class="col-sm-12 col-md-4 mt-1">
-              <p><strong><span translate>nb</span>:</strong><i translate>parser_nb_a</i><code>payload</code><i translate>parser_nb_b</i>
+              <p><strong><span translate>nb</span>:</strong><span translate>parser_nb_a</span><code>payload</code><span translate>parser_nb_b</span>
               </p>
               <div class="form-group">
-                <label for="name"><span translate>name</span>:</label>
-                <input type="text" required id="name" [(ngModel)]="parserToAdd.name" name="parser" class="form-control"
-                       placeholder="Parser name">
+                <input
+                  type="text"
+                  id="name"
+                  [(ngModel)]="parserToAdd.name"
+                  name="parser"
+                  class="form-control"
+                  placeholder="{{ 'name' | translate }}"
+                  required
+                  />
               </div>
               <div class="form-group">
-                <label for="description"><span translate>description</span>:</label>
-                <input type="text" required id="description" [(ngModel)]="parserToAdd.description" name="parser"
-                       class="form-control" placeholder="Parser description">
+                <input
+                  type="text"
+                  id="description"
+                  [(ngModel)]="parserToAdd.description"
+                  name="parser"
+                  class="form-control"
+                  placeholder="{{ 'description' | translate }}"
+                  required
+                  />
               </div>
               <button type="button" class="btn btn-secondary btn-parser mb-1" (click)="create()" translate>add_parser</button>
             </div>
@@ -51,9 +63,16 @@
               </p>
               <p class="text-parser" tooltip="Click to copy" click-copy>"parserId": "{{parser.id}}"</p>
               <div class="input-group">
-                <input type="text" [(ngModel)]="payload" #payloadInput id="{{parser.id}}" name="{{parser.name}}"
-                       class="form-control" placeholder="Sigfox payload in hexadecimal" maxlength="24"
-                       pattern="([a-fA-F0-9])$">
+                <input
+                  type="text"
+                  [(ngModel)]="payload"
+                  #payloadInput
+                  id="{{parser.id}}"
+                  name="{{parser.name}}"
+                  class="form-control"
+                  placeholder="Sigfox payload in hexadecimal"
+                  maxlength="24"
+                  pattern="([a-fA-F0-9])$" />
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-info" (click)="decodePayload(i, parser, payload)">
                       Test

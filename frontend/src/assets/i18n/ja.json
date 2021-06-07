@@ -94,5 +94,22 @@
   "nb": "注意",
   "parser_nb_a": "Sigfoxから送信されるペイロードが含まれる変数名は",
   "parser_nb_b": "を使用してください。",
-  "add_parser": "追加"
+  "add_parser": "追加",
+  "active": "アクティブ",
+  "one_shot": "ワンショット",
+  "trigger": "トリガー",
+  "last_triggered": "最終トリガー日時",
+  "add_alert": "アラートを追加",
+  "key": "キー",
+  "not_yet_triggered": "なし",
+  "exact_value": "同じ値",
+  "value": "値",
+  "between": "範囲",
+  "min_value": "最小値",
+  "max_value": "最大値",
+  "less_than": "この値より少ない",
+  "more_than": "この値より多い",
+  "custom_message": "カスタムメッセージ",
+  "close": "閉じる",
+  "add": "追加"
 }

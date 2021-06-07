@@ -3,7 +3,6 @@ import {AlertsComponent} from './alerts.component';
 import {AlertsRoutingModule} from './alerts-routing.module';
 import {CommonModule} from '@angular/common';
 import {DataFilterPipe} from './datafilterpipe';
-import {ToastrModule} from 'ngx-toastr';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DataTablesModule} from 'angular-datatables';
 import {MomentModule} from 'ngx-moment';
@@ -13,6 +12,7 @@ import {ModalModule} from 'ngx-bootstrap/modal';
 import {GoogleMapsAPIWrapper} from '@agm/core';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {LeafletDrawModule} from '@asymmetrik/ngx-leaflet-draw';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -24,10 +24,12 @@ import {LeafletDrawModule} from '@asymmetrik/ngx-leaflet-draw';
     TooltipModule.forRoot(),
     AngularMultiSelectModule,
     ModalModule.forRoot(),
-    ToastrModule.forRoot(),
     ReactiveFormsModule,
     LeafletModule,
-    LeafletDrawModule
+    LeafletDrawModule,
+    TranslateModule.forChild({
+      extend: true
+    }),
   ],
   providers: [
     GoogleMapsAPIWrapper

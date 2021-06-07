@@ -93,6 +93,22 @@
   "nb": "NB",
   "parser_nb_a": "Please use the variable name",
   "parser_nb_b": "as it will contain the Sigfox hexadecimal frame.",
-  "add_parser": "Add Parser"
-
+  "add_parser": "Add Parser",
+  "active": "Active",
+  "one_shot": "One Shot",
+  "trigger": "Trigger",
+  "last_triggered": "Last Triggered",
+  "add_alert": "Add alert",
+  "key": "Key",
+  "not_yet_triggered": "Not yet triggered",
+  "exact_value": "Exact value",
+  "value": "Value",
+  "between": "Between",
+  "min_value": "Min value",
+  "max_value": "Max value",
+  "less_than": "Less than",
+  "more_than": "More than",
+  "custom_message": "Custom message",
+  "close": "Close",
+  "add": "Add"
 }
