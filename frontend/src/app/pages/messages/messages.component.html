@@ -9,14 +9,14 @@
           <i class="fa fa-envelope fa-lg text-message"></i><strong translate>shared_messages</strong>
         </div>
         <div *ngIf="!messagesReady" class="card-block">
-          <span>Loading messages...</span>
+          <span translate>loading.messages</span>
           <div class="sk-double-bounce">
             <div class="sk-child sk-double-bounce1"></div>
             <div class="sk-child sk-double-bounce2"></div>
           </div>
         </div>
         <div *ngIf="messagesReady && !messages.length" class="card-block">
-          <span>No messages yet...</span>
+          <span translate>no_data.messages</span>
         </div>
 
         <ng-container *ngIf="messagesReady && messages.length>0">

@@ -13,7 +13,7 @@
         </div>
 
         <div *ngIf="loading" class="card-block">
-          <span>Loading devices...</span>
+          <span translate>loading.devices</span>
           <div class="sk-double-bounce">
             <div class="sk-child sk-double-bounce1"></div>
             <div class="sk-child sk-double-bounce2"></div>
@@ -21,7 +21,7 @@
         </div>
 
         <div *ngIf="!loading && !displayedDevices.length" class="card-block">
-          <span>No devices yet...</span>
+          <span translate>no_data.devices</span>
         </div>
 
         <!-- Table -->
@@ -314,7 +314,8 @@
     <div *ngIf="!edit" class="col-md-4">
       <div class="card">
         <div class="card-header">
-          <i class="fa fa-map-marker fa-lg text-tracking"></i> <strong>Map</strong>
+          <i class="fa fa-map-marker fa-lg text-tracking"></i>
+          <strong translate>map</strong>
         </div>
         <agm-map [latitude]="mapLat" [longitude]="mapLng" [zoom]="mapZoom" [mapTypeControl]="true" [fullscreenControl]="true">
           <ng-container *ngFor="let device of displayedDevices; let i = index">

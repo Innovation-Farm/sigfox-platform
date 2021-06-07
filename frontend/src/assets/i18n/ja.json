@@ -111,5 +111,54 @@
   "more_than": "この値より多い",
   "custom_message": "カスタムメッセージ",
   "close": "閉じる",
-  "add": "追加"
+  "add": "追加",
+  "token": "トークン",
+  "confirm": {
+    "title": "アクセストークンを削除します",
+    "message_a": "削除するアクセストークン",
+    "message_b": "この操作は取り消すことができません。トークンを削除すると現在このトークンを使用している設定は認証ができなくなります。"
+  },
+  "delete": "削除",
+  "cancel": "キャンセル",
+  "logo": "ロゴ",
+  "password_edit": {
+    "title": "パスワード更新",
+    "current_password": "現在のパスワード",
+    "new_password": "新しいパスワード",
+    "repeat_password": "新しいパスワード(確認用)"
+  },
+  "update": "更新",
+  "profile_edit": {
+    "title": "プロフィール更新"
+  },
+  "account_delete": {
+    "title": "アカウント削除",
+    "message_a": "アカウントを削除してよろしいですか？",
+    "message_b": "この操作は取り消すことができません。アカウントを削除すると、アカウントに紐づくすべてのデータが削除されます。削除されたデータは戻すことはできません(カテゴリー、デバイス、メッセージ、コネクターなど)。"
+  },
+  "edit": "編集",
+  "share": "共有",
+  "download_category": "このカテゴリーのデバイスのメッセージをCSVでダウンロード",
+  "category_edit": {
+    "title": "カテゴリーを編集",
+    "name": "カテゴリー"
+  },
+  "loading": {
+    "alerts": "読み込み中",
+    "categories": "読み込み中",
+    "devices": "読み込み中",
+    "messages": "読み込み中",
+    "connectors": "読み込み中"
+  },
+  "no_data": {
+    "alerts": "登録されているアラートはありません",
+    "categories": "登録されているカテゴリーはありません",
+    "devices": "登録されているデバイスはありません",
+    "messages": "登録されているメッセージはありません",
+    "connectors": "登録されているコネクターはありません"
+  },
+  "map": "マップ",
+  "default": "デフォルト値",
+  "remove_property": "プロパティを削除",
+  "add_property": "プロパティを追加"
 }

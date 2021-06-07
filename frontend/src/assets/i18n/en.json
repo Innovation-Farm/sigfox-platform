@@ -110,5 +110,54 @@
   "more_than": "More than",
   "custom_message": "Custom message",
   "close": "Close",
-  "add": "Add"
+  "add": "Add",
+  "token": "Token",
+  "confirm": {
+    "title": "Confirm removal of access token",
+    "message_a": "Are your sure you wish to delete this access token",
+    "message_b": "Be aware the Sigfox Backend callbacks you configured with this token will then be unauthorized!"
+  },
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "logo": "Logo",
+  "password_edit": {
+    "title": "Update your password",
+    "current_password": "Current password",
+    "new_password": "New password",
+    "repeat_password": "Retype new password"
+  },
+  "update": "Update",
+  "profile_edit": {
+    "title": "Update your profile"
+  },
+  "account_delete": {
+    "title": "Delete your account",
+    "message_a": "Are you sure you wish to delete your account?",
+    "message_b": "This action is irreversible and will permanently delete all your data (categories, devices, messages, connectors, ...)."
+  },
+  "edit": "Edit",
+  "share": "Share",
+  "download_category": "Download category devices messages (CSV)",
+  "category_edit": {
+    "title": "Edit category",
+    "name": "Category name"
+  },
+  "loading": {
+    "alerts": "Loading alerts...",
+    "categories": "Loading categories...",
+    "devices": "Loading devices...",
+    "messages": "Loading messages...",
+    "connectors": "Loading connectors..."
+  },
+  "no_data": {
+    "alerts": "No alerts yet...",
+    "categories": "No categories yet...",
+    "devices": "No devices yet...",
+    "messages": "No messages yet...",
+    "connectors": "No connectors yet..."
+  },
+  "map": "Map",
+  "default": "Default",
+  "remove_property": "Remove property",
+  "add_property": "Add property"
 }

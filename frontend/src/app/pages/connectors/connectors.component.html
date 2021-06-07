@@ -17,14 +17,14 @@
         </div>
 
         <div *ngIf="!connectorsReady" class="card-block">
-          <span>Loading connectors...</span>
+          <span translate>loading.connectors</span>
           <div class="sk-double-bounce">
             <div class="sk-child sk-double-bounce1"></div>
             <div class="sk-child sk-double-bounce2"></div>
           </div>
-          <div *ngIf="connectorsReady && !connectors.length">
-            <span>No connectors yet...</span>
-          </div>
+        </div>
+        <div *ngIf="connectorsReady && !connectors.length" class="card-block">
+          <span translate>no_data.connectors</span>
         </div>
 
         <ng-container *ngIf="connectorsReady && connectors.length>0">
@@ -69,9 +69,7 @@
   </div>
 </div>
 
-<div bsModal #addConnectorModal="bs-modal" class="modal fade" [config]="{ignoreBackdropClick: true}" tabindex="-1"
-                                                                                                     role="dialog"
-                                                                                                     aria-labelledby="addConnectorModal" aria-hidden="true">
+<div bsModal #addConnectorModal="bs-modal" class="modal fade" [config]="{ignoreBackdropClick: true}" tabindex="-1" role="dialog" aria-labelledby="addConnectorModal" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <!-- Form Begin -->
     <div class="modal-content">
@@ -134,7 +132,7 @@
             <ng-container *ngIf="connectorToAdd.type === 'sigfox-api'">
               <div class="form-group row">
                 <label class="col-md-3 form-control-label">
-                  <span>Login</span>
+                  <span translate>login</span>
                   <small class="text-danger">*</small>
                 </label>
                 <div class="col-md-9">
@@ -150,7 +148,7 @@
               </div>
               <div class="form-group row">
                 <label class="col-md-3 form-control-label">
-                  <span>Password</span>
+                  <span translate>password</span>
                   <small class="text-danger">*</small>
                 </label>
                 <div class="col-md-9">
@@ -177,7 +175,7 @@
                                      name="connectorToAdd.login"
                                      placeholder="Nexmo API key"
                                      [(ngModel)]="connectorToAdd.login"
-                                     required>
+                                     required />
                 </div>
               </div>
               <div class="form-group row">

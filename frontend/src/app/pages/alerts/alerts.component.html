@@ -17,14 +17,14 @@
         </div>
 
         <div *ngIf="!alertsReady" class="card-block">
-          <span>Loading alerts...</span>
+          <span translate>loading.alerts</span>
           <div class="sk-double-bounce">
             <div class="sk-child sk-double-bounce1"></div>
             <div class="sk-child sk-double-bounce2"></div>
           </div>
-          <div *ngIf="alertsReady && !alerts.length">
-            <span>No alerts yet...</span>
-          </div>
+        </div>
+        <div *ngIf="alertsReady && !alerts.length" class="card-block">
+          <span translate>no_data.alerts</span>
         </div>
 
         <!-- Table -->
@@ -45,8 +45,12 @@
               <tr *ngFor="let alert of alerts; let i = index">
                 <td>
                   <label for="{{alert.id + 'active'}}" class="switch switch-sm switch-3d switch-success-outline-alt">
-                    <input id="{{alert.id + 'active'}}" (change)="editAlert(alert, 'active')" [(ngModel)]="alert.active" type="checkbox"
-                                                                                                                         class="switch-input">
+                    <input
+                      id="{{alert.id + 'active'}}"
+                      (change)="editAlert(alert, 'active')"
+                      [(ngModel)]="alert.active"
+                      type="checkbox"
+                      class="switch-input" />
                     <span class="switch-label"></span>
                     <span class="switch-handle"></span>
                   </label>
@@ -59,7 +63,13 @@
                 </td>
                 <td>
                   <div class="checkbox checkbox-primary">
-                    <input type="checkbox" id="{{alert.id + 'one_shot'}}" name="alert.one_shot" (change)="editAlert(alert, 'oneshot')" [(ngModel)]="alert.one_shot" value="alert.one_shot">
+                    <input
+                      type="checkbox"
+                      id="{{alert.id + 'one_shot'}}"
+                      name="alert.one_shot"
+                      (change)="editAlert(alert, 'oneshot')"
+                      [(ngModel)]="alert.one_shot"
+                      value="alert.one_shot" />
                     <label for="{{alert.id + 'one_shot'}}"></label>
                   </div>
                 </td>

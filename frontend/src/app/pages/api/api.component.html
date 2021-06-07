@@ -9,46 +9,44 @@
             <i class="fa fa-plus-circle"></i>
           </button>
         </div>
-        <div class="card-block">
-          <ng-container *ngIf="!userReady">
-            Loading access token...
-            <div class="sk-double-bounce">
-              <div class="sk-child sk-double-bounce1"></div>
-              <div class="sk-child sk-double-bounce2"></div>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="userReady && !user.devAccessTokens.length">
-            No access token yet...
-          </ng-container>
-          <ng-container *ngIf="user.devAccessTokens.length > 0">
-            <div class="table-responsive">
-              <table datatable class="table table-hover">
-                <thead class="thead-inverse">
-                  <tr>
-                    <th class="text-center">Date</th>
-                    <th class="text-center">ID</th>
-                    <th class="text-center">Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of user.devAccessTokens">
-                    <td class="text-center">
-                      <span>{{item.created | date:"yyyy/MM/dd HH:mm:ss"}}</span>
-                    </td>
-                    <td class="text-center" click-copy (click)="toastClick()">
-                      <span>{{item.id}}</span>
-                    </td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-danger btn-round" (click)="openConfirmTokenModal(item)">
-                        <i class="fa fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </ng-container>
+        <div class="card-block" *ngIf="!userReady">
+          <span>Loading access token...</span>
+          <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+          </div>
         </div>
+        <div class="card-block" *ngIf="userReady && !user.devAccessTokens.length">
+          <span>No access token yet...</span>
+        </div>
+        <ng-container *ngIf="userReady && user.devAccessTokens.length > 0">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="thead-inverse">
+                <tr>
+                  <th translate>date</th>
+                  <th translate>token</th>
+                  <th translate>action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of user.devAccessTokens">
+                  <td>
+                    <span>{{item.created | date:"yyyy/MM/dd HH:mm:ss"}}</span>
+                  </td>
+                  <td click-copy (click)="toastClick()">
+                    <code>{{item.id}}</code>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-round" (click)="openConfirmTokenModal(item)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -332,21 +330,21 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Confirm removal of access token</h4>
+        <h4 class="modal-title" translate>confirm.title</h4>
         <button type="button" class="close" (click)="confirmTokenModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Are your sure you wish to delete this access token (id:
-          <small><b>{{devAccessTokenToRemove.id}}</b></small>
-          )?
+        <p>
+          <span translate>confirm.message_a</span>
+          <code>{{devAccessTokenToRemove.id}}</code>
         </p>
-        <p>Be aware the Sigfox Backend callbacks you configured with this token will then be <u>unauthorized</u>!</p>
+        <p translate>confirm.message_b</p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-danger" (click)="removeDevAccessToken()">Delete</button>
-        <button class="btn btn-sm btn-default" (click)="confirmTokenModal.hide()">Cancel</button>
+        <button class="btn btn-sm btn-danger" (click)="removeDevAccessToken()" translate>delete</button>
+        <button class="btn btn-sm btn-default" (click)="confirmTokenModal.hide()" translate>cancel</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

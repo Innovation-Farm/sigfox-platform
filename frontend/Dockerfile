@@ -10,6 +10,7 @@ ARG BUILD_ENV
 ARG API_URL
 ARG API_VERSION
 ARG PRIMUS_URL
+ARG CALLBACK_URL
 
 RUN npm run set-env && ./node_modules/.bin/ng build --$BUILD_ENV
 
