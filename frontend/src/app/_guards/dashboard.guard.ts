@@ -3,6 +3,8 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '
 import {UserApi} from '../shared/sdk/services/custom/User';
 import {Observable} from 'rxjs/Observable';
 import {Dashboard} from '../shared/sdk/models';
+import {map} from 'rxjs/operators';
+
 
 @Injectable()
 export class DashboardGuard implements CanActivate {
@@ -15,14 +17,17 @@ export class DashboardGuard implements CanActivate {
   }
 
   checkDashboardOwner(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.userApi.findByIdDashboards(this.userApi.getCurrentId(), route.params.id).map((dashboards: Dashboard[]) => {
-      if (dashboards) return true;
-      else {
-        // Not dashboard owner so redirect to overview page
-        this.router.navigate(['/']);
-        return false;
-      }
-    }).catch(res => {
+    return this.userApi.findByIdDashboards(this.userApi.getCurrentId(), route.params.id).pipe(
+      map((dashboards: Dashboard[]) => {
+        if (dashboards) {
+          return true;
+        } else {
+          // Not dashboard owner so redirect to overview page
+          this.router.navigate(['/']);
+          return false;
+        }
+      })
+    ).catch(res => {
       // Not dashboard owner so redirect to overview page
       this.router.navigate(['/']);
       return Observable.of(false);
