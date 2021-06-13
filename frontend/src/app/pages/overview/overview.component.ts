@@ -69,9 +69,9 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   private isCircleVisible: boolean[] = [];
 
-  private mapLat = 48.858093;
-  private mapLng = 2.294694;
-  private mapZoom = 2;
+  private mapLat = 36.3155448;
+  private mapLng = 138.506677;
+  private mapZoom = 6;
   private map;
 
   public filterQuery = '';
