@@ -4,6 +4,7 @@ import json
 import requests
 import time
 import sys
+import random
 
 headers = {
     "Authorization": sys.argv[1],
@@ -14,7 +15,7 @@ payload = {
     "deviceId": "00000001",
     "time": int(time.time()),
     "seqNumber": int(time.time()) % 4096,
-    "data": "80000000000000000000"
+    "data": "%02d000000000000000000" % random.randint(0, 100)
 }
 
 r = requests.post(
