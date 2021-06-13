@@ -27,10 +27,6 @@ export class DashboardGuard implements CanActivate {
           return false;
         }
       })
-    ).catch(res => {
-      // Not dashboard owner so redirect to overview page
-      this.router.navigate(['/']);
-      return Observable.of(false);
-    });
+    );
   }
 }
