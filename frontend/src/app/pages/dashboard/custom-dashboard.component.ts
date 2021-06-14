@@ -2,6 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChil
 import {ActivatedRoute, Router} from '@angular/router';
 import {DashboardApi, UserApi} from '../../shared/sdk/services/index';
 import {Category, Dashboard, Device, User, Widget} from '../../shared/sdk/models/index';
+import {Label} from 'ng2-charts';
 import {ToastrService} from 'ngx-toastr';
 import {Message, Organization} from '../../shared/sdk/models';
 import * as _ from 'lodash';
@@ -14,6 +15,8 @@ import {Subscription} from 'rxjs/Subscription';
 import {RealtimeService} from "../../shared/realtime/realtime.service";
 import {Location} from '@angular/common';
 import {environment} from "../../../../environments/environment";
+import {ChartDataSets} from 'chart.js';
+
 
 declare const d3: any;
 declare const google: any;
@@ -1143,7 +1146,7 @@ export class CustomDashboardComponent implements OnInit, OnDestroy {
   loadWidgets(): void {
     this.dashboardApi.getWidgets(this.dashboard.id, {order: 'createdAt ASC'}).subscribe((widgets: any[]) => {
       this.widgets = widgets;
-      console.log(this.widgets);
+      console.log("widgets", this.widgets);
       if (this.widgets) {
         this.dashboardReady = false;
         // Build widgets
@@ -1242,51 +1245,34 @@ export class CustomDashboardComponent implements OnInit, OnDestroy {
 
         // Line
         else if (widget.type === 'line') {
-          const chartData = [];
           const keys_units = [];
+          const chartData: ChartDataSets[] = [];
 
-          let w = 0;
-
-          // Loop each device for this widget
+          widget.options.chartLabels = [];
           devices.forEach((device: Device) => {
-            if (device.Messages[0]) {
-              const data_parsed: any = device.Messages[0].data_parsed;
-              // Loop each keys chosen for this widget
-              widget.options.keys.forEach((key: any) => {
-                const o: any = _.filter(device.Messages[0].data_parsed, {key: key})[0];
-                if (o) {
-                  keys_units.push(o);
-                  // Check if the device has this key and set the format to display
-                  data_parsed.forEach((line: any, k) => {
-                    if (line.key === key) {
-                      chartData[w] = {};
-                      // Set key
-                      if (widget.options.keys.length > 1) {
-                        if (line.unit !== '') {
-                          chartData[w].key = (line.key + ' (' + line.unit + ')' + ' - ' + device.id) + (device.name ? ' - ' + device.name : '');
-                        } else {
-                          chartData[w].key = (line.key + ' - ' + device.id) + (device.name ? ' - ' + device.name : '');
-                        }
-                      } else {
-                        chartData[w].key = device.id + (device.name ? ' - ' + device.name : '');
-                      }
-                      // Set values
-                      chartData[w].values = [];
-                      device.Messages.forEach((message: Message) => {
-                        const item: any = {
-                          label: new Date(message.createdAt),
-                          value: Number(_.filter(message.data_parsed,
-                            {key: key})[0].value)
-                        };
-                        chartData[w].values.push(item);
-                      });
+            widget.options.keys.forEach((key) => {
+              const datasets: ChartDataSets = { data: [], fill: false, lineTension: 0 };
+              const labels: Label[] = [];
+              if (device.Messages.length > 0) {
+                device.Messages.forEach((m) => {
+                  const found = m.data_parsed.find((it) => {
+                    if (it.key === key) {
+                      return true;
                     }
                   });
-                  w++;
-                }
-              });
-            }
+                  if (found) {
+                    datasets.data.push(found.value);
+                  }
+                  labels.push(m.createdAt.toString().replace(".000Z", ""));
+                });
+              }
+              datasets.label = device.id;
+              chartData.push(datasets);
+              widget.options.chartLabels = labels;
+            });
           });
+          console.log("datasets", chartData);
+
           // Replace data with chart data
           widget.data = chartData;
 

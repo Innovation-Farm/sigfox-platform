@@ -299,31 +299,20 @@
               <ng-container *ngIf="widget.type === 'table'">
                 <div *ngIf="widget.data" class="table-responsive">
                   <!-- Default table -->
-                  <table *ngIf="widget.options.tableType==='default'" class="table table-hover" [svData]="widget.data" #sv="svDataTable" [svRowsOnPage]="5">
+                  <table *ngIf="widget.options.tableType==='default'" class="table table-hover">
                     <thead class="thead-inverse">
                     <tr>
-                      <th class="text-center">
-                        <sv-default-sorter by="id"><i class="fa fa-sort"></i> ID</sv-default-sorter>
-                      </th>
-                      <th class="text-center">
-                        <sv-default-sorter by="data_downlink"><i class="fa fa-sort"></i> Info</sv-default-sorter>
-                      </th>
-                      <th class="text-center">
-                        <sv-default-sorter by="updatedAt"><i class="fa fa-sort"></i> Last Message</sv-default-sorter>
-                      </th>
-                      <th class="text-center">
-                        <sv-default-sorter by="data_parsed"><i class="fa fa-sort"></i> Data</sv-default-sorter>
-                      </th>
-                      <th class="text-center">
-                        <sv-default-sorter by="properties"><i class="fa fa-sort"></i> Properties</sv-default-sorter>
-                      </th>
+                      <th>ID</th>
+                      <th>Info</th>
+                      <th>Last Message</th>
+                      <th>Data</th>
+                      <th>Properties</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let device of sv.data; let i = index">
-                      <td class="text-center">
-                        <a
-                          [routerLink]="[!organization ? '/messages' : '/organization/' + organization.id + '/messages', device.id]"><strong
+                    <tr *ngFor="let device of widget.data; let i = index">
+                      <td>
+                        <a [routerLink]="[!organization ? '/messages' : '/organization/' + organization.id + '/messages', device.id]"><strong
                           class="text-device">{{device.id}}</strong></a>
                       </td>
                       <td>
@@ -345,7 +334,7 @@
                         </div>
                       </td>
 
-                      <td class="text-center">
+                      <td>
                         <div class="small text-gray-dark">{{device.Messages[0].createdAt | date:"yyyy/MM/dd HH:mm:ss"}}
                         </div>
                         <strong>{{device.Messages[0].createdAt | amTimeAgo}}</strong>
@@ -371,13 +360,6 @@
                       </td>
                     </tr>
                     </tbody>
-                    <tfoot>
-                    <tr>
-                      <td colspan="4">
-                        <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,15]"></sv-bootstrap-paginator>
-                      </td>
-                    </tr>
-                    </tfoot>
                   </table>
                   <!-- End Default table -->
                   <!-- Custom table -->
@@ -1410,13 +1392,19 @@
               </ng-container>
               <!-- End Gauge -->
 
-              <!-- Chart
+              <!-- Chart -->
               <ng-container *ngIf="widget.type === 'line'">
                 <div *ngIf="widget.data">
-                  <nvd3 [options]="widget.options.chartOptions" [data]="widget.data"></nvd3>
+                  <canvas baseChart
+                          [datasets]="widget.data"
+                          [labels]="widget.options.chartLabels"
+                          [options]="widget.options.chartOptions"
+                          [colors]="widget.options.chartColor"
+                          [legend]="true"
+                          [chartType]="'line'"></canvas>
                 </div>
               </ng-container>
-              End Chart -->
+              <!-- End Chart -->
 
               <!-- Bar -->
               <ng-container

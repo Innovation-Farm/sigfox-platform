@@ -12,7 +12,7 @@ headers = {
 }
 
 payload = {
-    "deviceId": "00000001",
+    "deviceId": sys.argv[2],
     "time": int(time.time()),
     "seqNumber": int(time.time()) % 4096,
     "data": "%02d000000000000000000" % random.randint(0, 100)
