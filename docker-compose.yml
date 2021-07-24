@@ -1,7 +1,7 @@
 version: '3'
 services:
   backend:
-    image: docker.pkg.github.com/${REPO_OWNER:-temp}/sigfox-platform/backend:${TAG:-latest}
+    image: ghcr.io/${REPO_OWNER:-temp}/sigfox-platform/backend:${TAG:-latest}
     container_name: backend
     build:
       context: backend
@@ -14,7 +14,7 @@ services:
       - '3000:3000'
 
   primus:
-    image: docker.pkg.github.com/${REPO_OWNER:-temp}/sigfox-platform/primus:${TAG:-latest}
+    image: ghcr.io/${REPO_OWNER:-temp}/sigfox-platform/primus:${TAG:-latest}
     container_name: primus
     build: primus
     restart: 'always'
@@ -24,7 +24,7 @@ services:
       - '2333:2333'
 
   frontend:
-    image: docker.pkg.github.com/${REPO_OWNER:-temp}/sigfox-platform/frontend:${TAG:-latest}
+    image: ghcr.io/${REPO_OWNER:-temp}/sigfox-platform/frontend:${TAG:-latest}
     container_name: frontend
     build:
       context: frontend
